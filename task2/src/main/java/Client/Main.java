@@ -4,15 +4,25 @@ import Message.MessageObject;
 
 import java.net.*;
 import java.io.*;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 
 public class Main {
 
-    private static final Logger logger = Logger.getLogger(Server.Main.class.getName());
+    //private static final Logger logger = Logger.getLogger(Server.Main.class.getName());
+    private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         logger.info("Client Started");
+        logger.debug("hello debug");
+        logger.error("hello error");
+        logger.fatal("hello fatal");
+        logger.trace("hello trace");
+        logger.warn("hello warn");
 
         // Open your connection to a server, at port 1254
         Socket socketOne = null;
