@@ -33,10 +33,11 @@ public class Main {
         logger.info("Received data: " + receivedData);
         receivedData++;
         dataOutputStream.writeInt(receivedData);
-        dataInputStream.close();
-        dataOutputStream.close();
+
+
 
         //------------------------------------------
+
 
         ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
@@ -46,6 +47,8 @@ public class Main {
         objectOutputStream.writeObject(receivedMessageObject);
         objectInputStream.close();
         objectOutputStream.close();
+
+
 
         socketOne.close();
 

@@ -42,13 +42,15 @@ public class Main {
 
         dataOutputStream.writeInt(10);
         int receivedData = dataInputStream.readInt();
-        dataInputStream.close();
-        dataOutputStream.close();
+
+
 
         System.out.println("Received data: " + receivedData);
 
 
         //---------------------------------------------
+
+
 
         ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
@@ -59,6 +61,8 @@ public class Main {
         objectOutputStream.close();
 
         System.out.println("Received message: " + receivedMessageObject);
+
+
 
 
         socketOne.close();
