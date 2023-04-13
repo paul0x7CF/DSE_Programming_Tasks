@@ -14,17 +14,25 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
+    <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+    <!-- Use following imports in your code:
+    import org.apache.logging.log4j.LogManager;
+    import org.apache.logging.log4j.Logger;
+    -->
     <dependencies>
         <dependency>
+            <!-- import Library for Logging -->
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.13.0</version>
+            <version>2.17.1</version>
         </dependency>
         <dependency>
+            <!-- import Library for Logging -->
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.13.0</version>
+            <version>2.17.1</version>
         </dependency>
     </dependencies>
-    
+
 </project>

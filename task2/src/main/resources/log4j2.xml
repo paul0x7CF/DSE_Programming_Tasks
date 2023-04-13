@@ -24,6 +24,8 @@
     </Loggers>
 </Configuration>
 
+
+
 <!--
 https://stackify.com/log4j2-java/
 https://logging.apache.org/log4j/2.x/log4j-core/apidocs/org/apache/logging/log4j/core/pattern/AnsiEscape.html
