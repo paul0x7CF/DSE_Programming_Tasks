@@ -13,9 +13,6 @@
 # IntelliJ
 *.iml
 
-# Generated folders
-target/
-
 # Package Files #
 *.jar
 *.war
