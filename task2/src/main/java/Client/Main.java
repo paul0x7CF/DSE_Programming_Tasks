@@ -4,7 +4,6 @@ import Message.MessageObject;
 
 import java.net.*;
 import java.io.*;
-//import java.util.logging.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 
 public class Main {
 
-    //private static final Logger logger = Logger.getLogger(Server.Main.class.getName());
     private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
