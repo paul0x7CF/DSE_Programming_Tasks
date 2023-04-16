@@ -4,6 +4,8 @@ import Message.MessageObject;
 
 import java.net.*;
 import java.io.*;
+import java.util.Arrays;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -67,6 +69,13 @@ public class Main {
 
 
         //------------------------------------------
+
+        int[] array = new int[3];
+        Arrays.fill(array, 2);
+
+        System.out.print("Array before sending: " + Arrays.toString(array));
+
+
 
 
         socketOne.close();
