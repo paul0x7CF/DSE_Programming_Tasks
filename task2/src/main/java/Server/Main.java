@@ -22,13 +22,14 @@ public class Main {
         // Get a communication stream
         // associated with the socket
 
+        OutputStream outputStream = socketOne.getOutputStream();
+        InputStream inputStream = socketOne.getInputStream();
+
         //---------------------------------------------
 
-        OutputStream outputStreamOne = socketOne.getOutputStream();
-        InputStream inputStreamOne = socketOne.getInputStream();
 
-        DataInputStream dataInputStream = new DataInputStream(inputStreamOne);
-        DataOutputStream dataOutputStream = new DataOutputStream(outputStreamOne);
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
 
         int receivedData = dataInputStream.readInt();
         logger.debug("Received Data Stream: " + receivedData);
@@ -40,11 +41,8 @@ public class Main {
         //------------------------------------------
 
 
-        InputStream inputStreamTwo = socketOne.getInputStream();
-        OutputStream outputStreamTwo = socketOne.getOutputStream();
-
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStreamTwo);
-        ObjectInputStream objectInputStream = new ObjectInputStream(inputStreamTwo);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
         MessageObject receivedMessageObject = (MessageObject) objectInputStream.readObject();
         logger.debug("Received Object Stream: " + receivedMessageObject);
@@ -52,6 +50,19 @@ public class Main {
         objectOutputStream.writeObject(receivedMessageObject);
 
         //------------------------------------------
+
+
+        while(true) {
+            try{
+            receivedMessageObject = (MessageObject) objectInputStream.readObject();
+            logger.debug("Received Object Stream: " + receivedMessageObject);
+            receivedMessageObject.incrementNumber();
+            objectOutputStream.writeObject(receivedMessageObject);
+            } catch(Exception e) {
+                break;
+            }
+        }
+
 
         socketOne.close();
         // Close the socket and its streams

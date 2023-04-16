@@ -10,7 +10,7 @@ public class MessageObject implements Serializable {
 
     private int number;
 
-    byte[] dataBlob;
+    byte[] dataBlob = new byte[0];
 
     private Date date;
 
@@ -32,6 +32,7 @@ public class MessageObject implements Serializable {
         return "MessageObject{" +
                 "name='" + name + '\'' +
                 ", number=" + number +
+                ", dataBlob=" + dataBlob.length/1024 +
                 ", date=" + date +
                 '}';
     }

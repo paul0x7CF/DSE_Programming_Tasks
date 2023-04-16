@@ -36,15 +36,14 @@ public class Main {
             }
         }
 
+        OutputStream outputStream = socketOne.getOutputStream();
+        InputStream inputStream = socketOne.getInputStream();
 
         //---------------------------------------------
 
 
-        OutputStream outputStreamOne = socketOne.getOutputStream();
-        InputStream inputStreamOne = socketOne.getInputStream();
-
-        DataInputStream dataInputStream = new DataInputStream(inputStreamOne);
-        DataOutputStream dataOutputStream = new DataOutputStream(outputStreamOne);
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
 
         dataOutputStream.writeInt(10);
         int receivedData = dataInputStream.readInt();
@@ -55,12 +54,9 @@ public class Main {
         //---------------------------------------------
 
 
-        InputStream inputStreamTwo = socketOne.getInputStream();
-        OutputStream outputStreamTwo = socketOne.getOutputStream();
-
         //ObjectOutputStream have to be created before ObjectInputStream
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStreamTwo);
-        ObjectInputStream objectInputStream = new ObjectInputStream(inputStreamTwo);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
         objectOutputStream.writeObject(new MessageObject("Client_1", 10));
         MessageObject receivedMessageObject = (MessageObject) objectInputStream.readObject();
@@ -70,11 +66,15 @@ public class Main {
 
         //------------------------------------------
 
-        int[] array = new int[3];
-        Arrays.fill(array, 2);
+        final int DATA_BLOB = 128;
+        MessageObject messageObject = new MessageObject("Client_2", 0, DATA_BLOB);
+        for(int i = 0; i < 1000; i++) {
 
-        System.out.print("Array before sending: " + Arrays.toString(array));
+            objectOutputStream.writeObject(messageObject);
+            messageObject = (MessageObject) objectInputStream.readObject();
 
+            System.out.println("Received message from Object Stream: " + messageObject);
+        }
 
 
 
