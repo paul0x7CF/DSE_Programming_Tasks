@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class MessageObject implements Serializable {
 
-    private String name;
+    private final String name;
 
     private int number;
 
@@ -47,6 +47,14 @@ public class MessageObject implements Serializable {
         byte[] byteArray = new byte[NUM_BYTES]; // Create byte array with the calculated number of bytes
         Arrays.fill(byteArray, (byte) 0); // Fill the array with 0's using Arrays.fill()
         return byteArray;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getNumber() {

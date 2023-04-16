@@ -4,7 +4,9 @@ import Message.MessageObject;
 
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,14 +69,27 @@ public class Main {
         //------------------------------------------
 
         final int DATA_BLOB = 128;
+        ArrayList<Integer> processingTime = new ArrayList<>();
         MessageObject messageObject = new MessageObject("Client_2", 0, DATA_BLOB);
         for(int i = 0; i < 1000; i++) {
-
+            if(i % 50 == 0) System.out.print(".");
+            messageObject.setDate(new Date(System.currentTimeMillis()));
             objectOutputStream.writeObject(messageObject);
             messageObject = (MessageObject) objectInputStream.readObject();
+            Date currentDate = new Date(System.currentTimeMillis());
+            processingTime.add((int) (currentDate.getTime() - messageObject.getDate().getTime()));
 
-            System.out.println("Received message from Object Stream: " + messageObject);
+            logger.trace("Time difference: " + (currentDate.getTime() - messageObject.getDate().getTime()));
+            logger.trace("Received message from Object Stream: " + messageObject);
         }
+
+        int entries = processingTime.size();
+        int sum = 0;
+        for (Integer eachProcessingTime : processingTime) {
+            sum += eachProcessingTime;
+        }
+        System.out.print("\n");
+        System.out.println("Average processing time: " + sum/entries + "ms");
 
 
 

@@ -55,7 +55,7 @@ public class Main {
         while(true) {
             try{
             receivedMessageObject = (MessageObject) objectInputStream.readObject();
-            logger.debug("Received Object Stream: " + receivedMessageObject);
+            logger.trace("Received Object Stream: " + receivedMessageObject);
             receivedMessageObject.incrementNumber();
             objectOutputStream.writeObject(receivedMessageObject);
             } catch(Exception e) {
