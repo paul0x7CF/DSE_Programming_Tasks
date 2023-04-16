@@ -1,14 +1,14 @@
 package Server;
 import Message.MessageObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.*;
 import java.io.*;
 
-import java.util.logging.Logger;
-
 public class Main {
 
-    private static final Logger logger = Logger.getLogger(Main.class.getName());
+    private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
@@ -21,16 +21,17 @@ public class Main {
         // Wait and accept a connection
         // Get a communication stream
         // associated with the socket
-        OutputStream outputStream = socketOne.getOutputStream();
-        InputStream inputStream = socketOne.getInputStream();
 
         //---------------------------------------------
 
-        DataInputStream dataInputStream = new DataInputStream(inputStream);
-        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+        OutputStream outputStreamOne = socketOne.getOutputStream();
+        InputStream inputStreamOne = socketOne.getInputStream();
+
+        DataInputStream dataInputStream = new DataInputStream(inputStreamOne);
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStreamOne);
 
         int receivedData = dataInputStream.readInt();
-        logger.info("Received data: " + receivedData);
+        logger.debug("Received Data Stream: " + receivedData);
         receivedData++;
         dataOutputStream.writeInt(receivedData);
 
@@ -39,18 +40,25 @@ public class Main {
         //------------------------------------------
 
 
-        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+        InputStream inputStreamTwo = socketOne.getInputStream();
+        OutputStream outputStreamTwo = socketOne.getOutputStream();
+
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStreamTwo);
+        ObjectInputStream objectInputStream = new ObjectInputStream(inputStreamTwo);
 
         MessageObject receivedMessageObject = (MessageObject) objectInputStream.readObject();
+        logger.debug("Received Object Stream: " + receivedMessageObject);
         receivedMessageObject.incrementNumber();
         objectOutputStream.writeObject(receivedMessageObject);
-        objectInputStream.close();
-        objectOutputStream.close();
 
-
+        //------------------------------------------
 
         socketOne.close();
+        // Close the socket and its streams
+
+
+
+
 
 
     }
