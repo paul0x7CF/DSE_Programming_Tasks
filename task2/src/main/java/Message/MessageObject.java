@@ -1,8 +1,9 @@
 package Message;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class MessageObject {
+public class MessageObject implements Serializable {
 
     private String name;
 
