@@ -4,9 +4,11 @@ import Message.MessageObject;
 
 import java.net.*;
 import java.io.*;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,8 +19,9 @@ public class Main {
 
     private static final Logger logger = LogManager.getLogger(Main.class);
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 
+        /*
         logger.info("Client Started");
 
         // Open your connection to a server, at port 1254
@@ -68,39 +71,80 @@ public class Main {
 
         //------------------------------------------
 
-        final int DATA_BLOB = 128;
-        ArrayList<Integer> processingTime = new ArrayList<>();
-        MessageObject messageObject = new MessageObject("Client_2", 0, DATA_BLOB);
-        for(int i = 0; i < 1000; i++) {
-            if(i % 50 == 0) System.out.print(".");
-            messageObject.setDate(new Date(System.currentTimeMillis()));
-            objectOutputStream.writeObject(messageObject);
-            messageObject = (MessageObject) objectInputStream.readObject();
-            Date currentDate = new Date(System.currentTimeMillis());
-            processingTime.add((int) (currentDate.getTime() - messageObject.getDate().getTime()));
 
-            logger.trace("Time difference: " + (currentDate.getTime() - messageObject.getDate().getTime()));
-            logger.trace("Received message from Object Stream: " + messageObject);
+        int[] dataBlob = {1, 2, 4, 8, 16, 128};
+        ArrayList<Double> processingTime = new ArrayList<>();
+        for (int eachDataBlob : dataBlob) {
+
+            MessageObject messageObject = new MessageObject("Client_2", 0, eachDataBlob);
+            System.out.println("Sending message Object 1000 times with dataBlob: " + eachDataBlob);
+
+            for (int i = 0; i < 1000; i++) {
+                if (i % 50 == 0) System.out.print(".");
+                messageObject.setDate(new Date(System.currentTimeMillis()));
+                objectOutputStream.writeObject(messageObject);
+                messageObject = (MessageObject) objectInputStream.readObject();
+                double currentprocessingTime = ((double) (System.nanoTime() - messageObject.getDate().getTime()) / 1000000.0);
+                processingTime.add((double) currentprocessingTime);
+
+                logger.trace("Time difference: " + (currentprocessingTime));
+                logger.trace("Received message from Object Stream: " + messageObject);
+            }
+            int entries = processingTime.size();
+            int sum = 0;
+            for (Double eachProcessingTime : processingTime) {
+                sum += eachProcessingTime;
+            }
+            System.out.print("\n");
+            System.out.println("Average processing time: " + sum / entries + "ms");
         }
 
-        int entries = processingTime.size();
-        int sum = 0;
-        for (Integer eachProcessingTime : processingTime) {
-            sum += eachProcessingTime;
-        }
-        System.out.print("\n");
-        System.out.println("Average processing time: " + sum/entries + "ms");
-
-
-
+        objectInputStream.close();
+        objectOutputStream.close();
+        dataInputStream.close();
+        dataOutputStream.close();
+        inputStream.close();
+        outputStream.close();
         socketOne.close();
-        // Close the socket and its streams
+        //------------------------------------------
+
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+        for (int i = 0; i < 1000; ++i) {
+            Socket socketThreading = new Socket("localhost", 1254);
+            Runnable worker = new ConnectionHandler(socketThreading, "Client " + i, i);
+            executor.execute(worker);
+        }
+        executor.shutdown();
+
+        //------------------------------------------
 
 
+         */
+        logger.info("task4");
 
+        DatagramSocket aSocket = null;
+        try {
+            aSocket = new DatagramSocket();
+            int message = 10;
+            byte[] buffer = ByteBuffer.allocate(Integer.BYTES).putInt(message).array();
+            InetAddress aHost = InetAddress.getByName("localhost");
+            int serverPort = 7000;
+            DatagramPacket request = new DatagramPacket(buffer, buffer.length, aHost, serverPort);
+            aSocket.send(request);
 
-
-
+            byte[] receivedBuffer = new byte[1000];
+            DatagramPacket receivePacket  = new DatagramPacket(receivedBuffer, receivedBuffer.length);
+            aSocket.receive(receivePacket);
+            int receivedMessage = ByteBuffer.wrap(receivePacket.getData()).getInt();
+            System.out.println("Reply: " + receivedMessage);
+        } catch (SocketException e) {
+            System.out.println("Socket: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO: " + e.getMessage());
+        } finally {
+            if (aSocket != null)
+                aSocket.close();
+        }
 
     }
 }

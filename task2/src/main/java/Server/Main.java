@@ -5,6 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.net.*;
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
 
@@ -14,7 +17,7 @@ public class Main {
 
 
         logger.info("Server Started");
-
+        /*
         // Register service on port 1254
         ServerSocket serverSocket = new ServerSocket(1254);
         Socket socketOne = serverSocket.accept();
@@ -52,20 +55,67 @@ public class Main {
         //------------------------------------------
 
 
-        while(true) {
-            try{
+        for( int i = 0; i < 6000; i++) {
             receivedMessageObject = (MessageObject) objectInputStream.readObject();
             logger.trace("Received Object Stream: " + receivedMessageObject);
             receivedMessageObject.incrementNumber();
             objectOutputStream.writeObject(receivedMessageObject);
-            } catch(Exception e) {
-                break;
+        }
+
+        objectInputStream.close();
+        objectOutputStream.close();
+        dataInputStream.close();
+        dataOutputStream.close();
+        inputStream.close();
+        outputStream.close();
+        socketOne.close();
+
+        //------------------------------------------
+
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+        for( int i = 0; i < 1000; i++) {
+                Socket socketThreading = serverSocket.accept();
+                Runnable worker = new ClientHandler(socketThreading);
+                executor.execute(worker);
+        }
+        executor.shutdown();
+
+        //------------------------------------------
+
+
+        */
+        logger.info("task4");
+
+        DatagramSocket aSocket = null;
+        try {
+            aSocket = new DatagramSocket(7000);
+            byte[] buffer = new byte[1000];
+            while (true) {
+                DatagramPacket request = new DatagramPacket(buffer, buffer.length);
+                aSocket.receive(request);
+                int receivedData = ByteBuffer.wrap(request.getData()).getInt();
+                logger.debug("Received Data : " + receivedData);
+                receivedData++;
+                byte[] replyBuffer = ByteBuffer.allocate(Integer.BYTES).putInt(receivedData).array();
+                DatagramPacket reply = new DatagramPacket(
+                        replyBuffer,
+                        replyBuffer.length,
+                        request.getAddress(),
+                        request.getPort());
+                aSocket.send(reply);
             }
+        } catch (SocketException e) {
+            System.out.println("Socket: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO: " + e.getMessage());
+        } finally {
+            if (aSocket != null)
+                aSocket.close();
+
         }
 
 
-        socketOne.close();
-        // Close the socket and its streams
+
 
 
 
