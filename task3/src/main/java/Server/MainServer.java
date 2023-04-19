@@ -14,11 +14,15 @@ public class MainServer {
     private static final Logger logger = LogManager.getLogger(MainServer.class);
     public static void main(String[] args) {
 
+        logger.info("Starting server...");
+
         try{
             LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
             Naming.rebind("rmi://localhost:" + Registry.REGISTRY_PORT + "/MyRMI", new BankingServerImpl());
+
         }catch(RemoteException| MalformedURLException e){
             e.printStackTrace();
+
         }
 
     }

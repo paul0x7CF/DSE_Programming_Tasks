@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Arrays;
 
-public class BankingServerImpl extends UnicastRemoteObject implements BankingServer {
+public class BankingServerImpl extends UnicastRemoteObject implements IBankingServer {
     private double[] accounts = new double[10];
 
     public BankingServerImpl() throws RemoteException {
