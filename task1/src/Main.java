@@ -28,5 +28,7 @@ public class Main {
         new Thread(multby5).start();
         new Thread(merge).start();
         new Thread(print).start();
+
+
     }
 }

@@ -19,6 +19,16 @@ public class MainClient {
 
         try{
             IBankingServer stub = (IBankingServer) Naming.lookup("rmi://localhost:" + Registry.REGISTRY_PORT + "/MyRMI");
+
+            System.out.println("Total Bank Balance: " + stub.audit());
+            logger.debug("Balance of Account Nr.[0]: {}", stub.getBalance(0));
+            logger.debug("Balance of Account Nr.[1]: {}", stub.getBalance(1));
+            logger.info("Transfering 1000 from Account Nr.[0] to Account Nr.[1]");
+            stub.transfer(0, 1, 1000);
+            logger.debug("Balance of Account Nr.[1]: {}", stub.getBalance(0));
+            logger.debug("Balance of Account Nr.[1]: {}", stub.getBalance(1));
+            System.out.println("Total Bank Balance:" + stub.audit());
+
         }catch (MalformedURLException| NotBoundException| RemoteException e){
             e.printStackTrace();
         }

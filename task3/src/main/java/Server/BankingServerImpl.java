@@ -3,12 +3,24 @@ package Server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
-public class BankingServerImpl extends UnicastRemoteObject implements IBankingServer {
+public class BankingServerImpl extends UnicastRemoteObject implements IBankingServer, Runnable {
     private double[] accounts = new double[10];
+    private HashMap<Integer,Account> accountsMap= new LinkedHashMap<Integer, Account>();
 
     public BankingServerImpl() throws RemoteException {
         Arrays.fill(accounts, 10000);
+
+        for(int i = 0; i < 10; i++){
+            accountsMap.put(i, new Account(i));
+        }
+        for(Account eachAccount : accountsMap.values()) {
+            new Thread(eachAccount);
+        }
+
+
     }
 
     @Override
@@ -33,5 +45,10 @@ public class BankingServerImpl extends UnicastRemoteObject implements IBankingSe
             sum += account;
         }
         return "Total balance: " + sum;
+    }
+
+    @Override
+    public void run() {
+
     }
 }
