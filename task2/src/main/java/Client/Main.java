@@ -5,7 +5,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.net.Socket;
+import java.net.*;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
@@ -42,7 +43,7 @@ public class Main {
         // only when it tries to send data an exception will occur
 
 
-
+        /*
         buildDataStreamConnection(socketOne);
 
         buildObjectStreamConnection(socketOne);
@@ -54,8 +55,9 @@ public class Main {
 
         threadingConnection();
 
+         */
 
-        /*
+
         logger.info("task4");
 
         DatagramSocket aSocket = null;
@@ -81,7 +83,6 @@ public class Main {
             if (aSocket != null)
                 aSocket.close();
         }
-        */
 
 
     }

@@ -26,7 +26,7 @@ public class Main {
         // Get a communication stream
         // associated with the socket
 
-
+        /*
         buildDataStreamConnection(socketOne);
 
         buildObjectStreamConnection(socketOne);
@@ -37,9 +37,9 @@ public class Main {
         socketOne.close();
 
         threadingConnection(serverSocket);
+        */
 
 
-        /*
         logger.info("task4");
 
         DatagramSocket aSocket = null;
@@ -69,7 +69,6 @@ public class Main {
                 aSocket.close();
 
         }
-        */
 
     }
 
