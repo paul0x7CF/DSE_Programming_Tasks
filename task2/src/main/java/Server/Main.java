@@ -1,4 +1,5 @@
 package Server;
+
 import Message.MessageObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +18,7 @@ public class Main {
 
 
         logger.info("Server Started");
-        /*
+
         // Register service on port 1254
         ServerSocket serverSocket = new ServerSocket(1254);
         Socket socketOne = serverSocket.accept();
@@ -25,65 +26,20 @@ public class Main {
         // Get a communication stream
         // associated with the socket
 
-        OutputStream outputStream = socketOne.getOutputStream();
-        InputStream inputStream = socketOne.getInputStream();
 
-        //---------------------------------------------
+        buildDataStreamConnection(socketOne);
 
-
-        DataInputStream dataInputStream = new DataInputStream(inputStream);
-        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-
-        int receivedData = dataInputStream.readInt();
-        logger.debug("Received Data Stream: " + receivedData);
-        receivedData++;
-        dataOutputStream.writeInt(receivedData);
-
-
-
-        //------------------------------------------
-
-
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-
-        MessageObject receivedMessageObject = (MessageObject) objectInputStream.readObject();
-        logger.debug("Received Object Stream: " + receivedMessageObject);
-        receivedMessageObject.incrementNumber();
-        objectOutputStream.writeObject(receivedMessageObject);
-
-        //------------------------------------------
-
-
-        for( int i = 0; i < 6000; i++) {
-            receivedMessageObject = (MessageObject) objectInputStream.readObject();
-            logger.trace("Received Object Stream: " + receivedMessageObject);
-            receivedMessageObject.incrementNumber();
-            objectOutputStream.writeObject(receivedMessageObject);
-        }
-
-        objectInputStream.close();
-        objectOutputStream.close();
-        dataInputStream.close();
-        dataOutputStream.close();
-        inputStream.close();
-        outputStream.close();
+        buildObjectStreamConnection(socketOne);
         socketOne.close();
 
-        //------------------------------------------
+        Socket socketTwo = serverSocket.accept();
+        sendDataBlob(socketTwo);
+        socketOne.close();
 
-        ExecutorService executor = Executors.newFixedThreadPool(4);
-        for( int i = 0; i < 1000; i++) {
-                Socket socketThreading = serverSocket.accept();
-                Runnable worker = new ClientHandler(socketThreading);
-                executor.execute(worker);
-        }
-        executor.shutdown();
-
-        //------------------------------------------
+        threadingConnection(serverSocket);
 
 
-        */
+        /*
         logger.info("task4");
 
         DatagramSocket aSocket = null;
@@ -113,15 +69,89 @@ public class Main {
                 aSocket.close();
 
         }
-
-
-
-
-
-
-
-
+        */
 
     }
+
+    private static void buildDataStreamConnection(Socket socket) {
+        try {
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
+            DataInputStream dataInputStream = new DataInputStream(inputStream);
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+
+            int receivedData = dataInputStream.readInt();
+            logger.debug("Received Data Stream: " + receivedData);
+            receivedData++;
+            dataOutputStream.writeInt(receivedData);
+
+        } catch (IOException e) {
+            logger.error("Error in Data Stream Connection {}", e.getMessage());
+        }
+
+    }
+
+    private static void buildObjectStreamConnection(Socket socket) {
+
+        try {
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
+
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+
+            MessageObject receivedMessageObject = (MessageObject) objectInputStream.readObject();
+            logger.debug("Received Object Stream: " + receivedMessageObject);
+            receivedMessageObject.incrementNumber();
+            objectOutputStream.writeObject(receivedMessageObject);
+
+            inputStream.close();
+            outputStream.close();
+            objectOutputStream.close();
+            objectInputStream.close();
+
+        } catch (IOException e) {
+            logger.error("Error in Object Stream Connection {}", e.getMessage());
+        } catch (ClassNotFoundException e) {
+            logger.error("Error in Object Stream Connection {}", e.getMessage());
+        }
+
+    }
+
+    private static void sendDataBlob(Socket socket) {
+        ObjectOutputStream objectOutputStream = null;
+        try {
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+
+            for (int i = 0; i < 6000; i++) {
+                MessageObject receivedMessageObject = (MessageObject) objectInputStream.readObject();
+                logger.trace("Received Object Stream: " + receivedMessageObject);
+                receivedMessageObject.incrementNumber();
+                objectOutputStream.writeObject(receivedMessageObject);
+            }
+        } catch (IOException e) {
+            logger.error("Error in Object Stream Connection {}", e.getMessage());
+        } catch (ClassNotFoundException e) {
+            logger.error("Error in Object Stream Connection {}", e.getMessage());
+        }
+    }
+
+    private static void threadingConnection(ServerSocket serverSocket) {
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+        try {
+            for (int i = 0; i < 1000; i++) {
+                Socket socketThreading = null;
+                socketThreading = serverSocket.accept();
+                Runnable worker = new ClientHandler(socketThreading);
+                executor.execute(worker);
+            }
+            executor.shutdown();
+        } catch (IOException e) {
+            logger.error("Error in threading Connection {}", e.getMessage());
+        }
+
+    }
+
 
 }
