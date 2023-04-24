@@ -19,14 +19,16 @@ public class Main {
 
         logger.info("Server Started");
 
-        // Register service on port 1254
-        ServerSocket serverSocket = new ServerSocket(1254);
-        Socket socketOne = serverSocket.accept();
-        // Wait and accept a connection
-        // Get a communication stream
-        // associated with the socket
 
-        /*
+        // Open a server socket on port 1254
+        // Bind the server socket to a an port
+        ServerSocket serverSocket = new ServerSocket(1254);
+
+        // Wait, listen and accept for incoming client connections
+        Socket socketOne = serverSocket.accept();
+
+
+        // Write/Read data to/from the client
         buildDataStreamConnection(socketOne);
 
         buildObjectStreamConnection(socketOne);
@@ -34,10 +36,12 @@ public class Main {
 
         Socket socketTwo = serverSocket.accept();
         sendDataBlob(socketTwo);
+
+        //close the socket
         socketOne.close();
 
         threadingConnection(serverSocket);
-        */
+
 
 
         logger.info("task4");

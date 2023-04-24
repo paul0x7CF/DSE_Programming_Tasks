@@ -22,6 +22,7 @@ public class Main {
 
         logger.info("Client Started");
 
+        /*
         // Open your connection to a server, at port 1254
         Socket socketOne = null;
         while (socketOne == null) {
@@ -43,7 +44,6 @@ public class Main {
         // only when it tries to send data an exception will occur
 
 
-        /*
         buildDataStreamConnection(socketOne);
 
         buildObjectStreamConnection(socketOne);
