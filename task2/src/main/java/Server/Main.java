@@ -20,6 +20,7 @@ public class Main {
         logger.info("Server Started");
 
 
+        /*
         // Open a server socket on port 1254
         // Bind the server socket to a an port
         ServerSocket serverSocket = new ServerSocket(1254);
@@ -41,6 +42,7 @@ public class Main {
         socketOne.close();
 
         threadingConnection(serverSocket);
+        */
 
 
 

@@ -61,27 +61,43 @@ public class Main {
         logger.info("task4");
 
         DatagramSocket aSocket = null;
-        try {
-            aSocket = new DatagramSocket();
-            int message = 10;
-            byte[] buffer = ByteBuffer.allocate(Integer.BYTES).putInt(message).array();
-            InetAddress aHost = InetAddress.getByName("localhost");
-            int serverPort = 7000;
-            DatagramPacket request = new DatagramPacket(buffer, buffer.length, aHost, serverPort);
-            aSocket.send(request);
+        while (true) {
+            try {
+                aSocket = new DatagramSocket();
+                logger.info("DatagramSocket created");
 
-            byte[] receivedBuffer = new byte[1000];
-            DatagramPacket receivePacket  = new DatagramPacket(receivedBuffer, receivedBuffer.length);
-            aSocket.receive(receivePacket);
-            int receivedMessage = ByteBuffer.wrap(receivePacket.getData()).getInt();
-            System.out.println("Reply: " + receivedMessage);
-        } catch (SocketException e) {
-            System.out.println("Socket: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IO: " + e.getMessage());
-        } finally {
-            if (aSocket != null)
-                aSocket.close();
+                int message = 10;
+                byte[] buffer = ByteBuffer.allocate(Integer.BYTES).putInt(message).array();
+                InetAddress aHost = InetAddress.getByName("localhost");
+                int serverPort = 7000;
+                DatagramPacket request = new DatagramPacket(buffer, buffer.length, aHost, serverPort);
+
+                aSocket.send(request);
+                logger.debug("Request sent");
+
+                byte[] receivedBuffer = new byte[1000];
+                DatagramPacket receivePacket = new DatagramPacket(receivedBuffer, receivedBuffer.length);
+
+                // Endless wait can be occur if server is not responding
+                // Set timeout to avoid this timeout throw SocketException
+                aSocket.setSoTimeout(5000);
+                logger.debug("Waiting for reply");
+                aSocket.receive(receivePacket);
+                logger.debug("Reply received");
+
+                int receivedMessage = ByteBuffer.wrap(receivePacket.getData()).getInt();
+                System.out.println("Reply: " + receivedMessage);
+
+            } catch (SocketException e) {
+                logger.error("Socket: " + e.getMessage());
+            } catch (IOException e) {
+                logger.error("IO: " + e.getMessage());
+            } finally {
+                if (aSocket != null) {
+                    logger.info("Closing socket");
+                    aSocket.close();
+                }
+            }
         }
 
 
