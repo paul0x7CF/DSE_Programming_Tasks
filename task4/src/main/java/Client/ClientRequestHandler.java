@@ -14,16 +14,16 @@ public class ClientRequestHandler {
 
     public static byte[] sendMessage(byte[] data) {
         try {
+            logger.info("Client Socket created");
             Socket socket = new Socket("localhost", 8080);
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-            //Why is length needed?
             dataOutputStream.writeInt(data.length);
             dataOutputStream.write(data);
 
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
             byte[] response = new byte[dataInputStream.readInt()];
-            //Why?
+
             dataInputStream.readFully(response, 0, response.length);
 
             //Close the connection
