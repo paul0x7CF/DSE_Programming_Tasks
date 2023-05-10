@@ -22,7 +22,7 @@ public class Main {
 
         logger.info("Client Started");
 
-        /*
+
         // Open your connection to a server, at port 1254
         Socket socketOne = null;
         while (socketOne == null) {
@@ -55,50 +55,12 @@ public class Main {
 
         threadingConnection();
 
-         */
 
+        //  --UDP--
 
-        logger.info("task4");
+        udpDataConnection();
 
-        DatagramSocket aSocket = null;
-        while (true) {
-            try {
-                aSocket = new DatagramSocket();
-                logger.info("DatagramSocket created");
-
-                int message = 10;
-                byte[] buffer = ByteBuffer.allocate(Integer.BYTES).putInt(message).array();
-                InetAddress aHost = InetAddress.getByName("localhost");
-                int serverPort = 7000;
-                DatagramPacket request = new DatagramPacket(buffer, buffer.length, aHost, serverPort);
-
-                aSocket.send(request);
-                logger.debug("Request sent");
-
-                byte[] receivedBuffer = new byte[1000];
-                DatagramPacket receivePacket = new DatagramPacket(receivedBuffer, receivedBuffer.length);
-
-                // Endless wait can be occur if server is not responding
-                // Set timeout to avoid this timeout throw SocketException
-                aSocket.setSoTimeout(5000);
-                logger.debug("Waiting for reply");
-                aSocket.receive(receivePacket);
-                logger.debug("Reply received");
-
-                int receivedMessage = ByteBuffer.wrap(receivePacket.getData()).getInt();
-                System.out.println("Reply: " + receivedMessage);
-
-            } catch (SocketException e) {
-                logger.error("Socket: " + e.getMessage());
-            } catch (IOException e) {
-                logger.error("IO: " + e.getMessage());
-            } finally {
-                if (aSocket != null) {
-                    logger.info("Closing socket");
-                    aSocket.close();
-                }
-            }
-        }
+        updObjectConnection();
 
 
     }
@@ -212,5 +174,120 @@ public class Main {
         } catch (IOException e) {
             logger.error("Error in threadingConnection: {}", e.getMessage());
         }
+    }
+
+    private static void udpDataConnection() {
+
+        logger.info("task4");
+
+        DatagramSocket aSocket = null;
+        while (true) {
+            try {
+                aSocket = new DatagramSocket();
+                logger.info("DatagramSocket created");
+
+                int message = 10;
+                byte[] buffer = ByteBuffer.allocate(Integer.BYTES).putInt(message).array();
+                InetAddress aHost = InetAddress.getByName("localhost");
+                int serverPort = 7000;
+                DatagramPacket request = new DatagramPacket(buffer, buffer.length, aHost, serverPort);
+
+                aSocket.send(request);
+                logger.debug("Request sent");
+
+                byte[] receivedBuffer = new byte[1000];
+                DatagramPacket receivePacket = new DatagramPacket(receivedBuffer, receivedBuffer.length);
+
+                // Endless wait can be occur if server is not responding
+                // Set timeout to avoid this timeout throw SocketException
+                aSocket.setSoTimeout(5000);
+                logger.debug("Waiting for reply");
+                aSocket.receive(receivePacket);
+                logger.debug("Reply received");
+
+                int receivedMessage = ByteBuffer.wrap(receivePacket.getData()).getInt();
+                System.out.println("Reply: " + receivedMessage);
+
+            } catch (SocketException e) {
+                logger.error("Socket: " + e.getMessage());
+            } catch (IOException e) {
+                logger.error("IO: " + e.getMessage());
+            } finally {
+                if (aSocket != null) {
+                    logger.info("Closing socket");
+                    aSocket.close();
+                }
+            }
+        }
+
+    }
+
+    private static void updObjectConnection() {
+        // Default port number
+        int portNumber = 7000;
+        InetAddress serverAddress = null;
+        try {
+            serverAddress = InetAddress.getByName("localhost");
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+
+        DatagramSocket clientSocket = null;
+        logger.info("Client started...");
+
+        try {
+            clientSocket = new DatagramSocket();
+
+            BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+            System.out.print("Enter a number to be incremented: ");
+            String number = inFromUser.readLine();
+
+            MessageObject message = new MessageObject("Client", Integer.parseInt(number));
+            byte[] sendBuffer;
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(message);
+            oos.flush();
+            sendBuffer = bos.toByteArray();
+            oos.close();
+            bos.close();
+
+            DatagramPacket sendPacket = new DatagramPacket(sendBuffer,
+                    sendBuffer.length,
+                    serverAddress,
+                    portNumber);
+
+            clientSocket.send(sendPacket);
+
+            byte[] receiveBuffer = new byte[1000];
+            DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
+            clientSocket.receive(receivePacket);
+
+            byte[] receivedData = receivePacket.getData();
+            ByteArrayInputStream bis = new ByteArrayInputStream(receivedData);
+            ObjectInputStream ois = new ObjectInputStream(bis);
+            MessageObject receivedMessage;
+
+            try {
+                receivedMessage = (MessageObject) ois.readObject();
+                logger.debug("Received Incremented Message: " + receivedMessage.toString());
+            } catch (ClassNotFoundException e) {
+                logger.error("Error: " + e.getMessage());
+                return;
+            } finally {
+                ois.close();
+                bis.close();
+            }
+        } catch (SocketException e) {
+            logger.error("Socket: " + e.getMessage());
+        } catch (IOException e) {
+            logger.error("IO: " + e.getMessage());
+        } finally {
+            if (clientSocket != null)
+                clientSocket.close();
+        }
+
+        logger.info("Client closed");
     }
 }

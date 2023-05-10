@@ -5,16 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="25978d8e-91ca-44c2-a290-f0f6b16b6962" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../task3/src/main/java/Server/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task2/src/main/java/Client/ConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task2/src/main/java/Client/ConnectionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task2/src/main/java/Client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task2/src/main/java/Client/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task2/src/main/java/Server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task2/src/main/java/Server/ThreadingHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task2/src/main/java/Server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task2/src/main/java/Server/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../task3/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../task3/src/main/java/Client/MainClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task3/src/main/java/Client/MainClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../task3/src/main/java/Server/BankingServerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task3/src/main/java/Server/BankingServerImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="printScope" value="4" />
+    <option name="PRINT_LINE_NUMBERS" value="true" />
+    <option name="OPEN_IN_BROWSER" value="true" />
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../../PR-tasks-exported" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -29,7 +37,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/paulf/OneDrive/Uni/23_SS/DSE/DSE_Programming_Tasks/task1&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/paulf/OneDrive/Uni/23_SS/DSE/PR-tasks-exported&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -49,6 +57,12 @@
       <workItem from="1682002432290" duration="2892000" />
       <workItem from="1682079620254" duration="17000" />
       <workItem from="1682087416691" duration="3037000" />
+      <workItem from="1682356362200" duration="668000" />
+      <workItem from="1682433153716" duration="8000" />
+      <workItem from="1682453198356" duration="453000" />
+      <workItem from="1682457379862" duration="701000" />
+      <workItem from="1682686114321" duration="1968000" />
+      <workItem from="1682723525365" duration="127000" />
     </task>
     <servers />
   </component>

@@ -9,12 +9,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ClientHandler implements Runnable {
+public class ThreadingHandler implements Runnable {
 
-    private static final Logger logger = LogManager.getLogger(ClientHandler.class);
+    private static final Logger logger = LogManager.getLogger(ThreadingHandler.class);
     private Socket socket;
 
-    public ClientHandler(Socket socket) {
+    public ThreadingHandler(Socket socket) {
         this.socket = socket;
     }
 

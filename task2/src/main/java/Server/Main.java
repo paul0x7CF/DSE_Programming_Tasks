@@ -20,7 +20,6 @@ public class Main {
         logger.info("Server Started");
 
 
-        /*
         // Open a server socket on port 1254
         // Bind the server socket to a an port
         ServerSocket serverSocket = new ServerSocket(1254);
@@ -42,39 +41,14 @@ public class Main {
         socketOne.close();
 
         threadingConnection(serverSocket);
-        */
 
 
+        // --UDP--
 
-        logger.info("task4");
+        udpDataConnection();
 
-        DatagramSocket aSocket = null;
-        try {
-            aSocket = new DatagramSocket(7000);
-            byte[] buffer = new byte[1000];
-            while (true) {
-                DatagramPacket request = new DatagramPacket(buffer, buffer.length);
-                aSocket.receive(request);
-                int receivedData = ByteBuffer.wrap(request.getData()).getInt();
-                logger.debug("Received Data : " + receivedData);
-                receivedData++;
-                byte[] replyBuffer = ByteBuffer.allocate(Integer.BYTES).putInt(receivedData).array();
-                DatagramPacket reply = new DatagramPacket(
-                        replyBuffer,
-                        replyBuffer.length,
-                        request.getAddress(),
-                        request.getPort());
-                aSocket.send(reply);
-            }
-        } catch (SocketException e) {
-            System.out.println("Socket: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IO: " + e.getMessage());
-        } finally {
-            if (aSocket != null)
-                aSocket.close();
+        updObjectConnection();
 
-        }
 
     }
 
@@ -148,7 +122,7 @@ public class Main {
             for (int i = 0; i < 1000; i++) {
                 Socket socketThreading = null;
                 socketThreading = serverSocket.accept();
-                Runnable worker = new ClientHandler(socketThreading);
+                Runnable worker = new ThreadingHandler(socketThreading);
                 executor.execute(worker);
             }
             executor.shutdown();
@@ -158,5 +132,107 @@ public class Main {
 
     }
 
+    private static void udpDataConnection() {
+
+        logger.info("task4");
+
+        DatagramSocket aSocket = null;
+        try {
+            aSocket = new DatagramSocket(7000);
+            byte[] buffer = new byte[1000];
+            while (true) {
+                DatagramPacket request = new DatagramPacket(buffer, buffer.length);
+
+                logger.debug("Waiting for request");
+                aSocket.receive(request);
+
+                int receivedData = ByteBuffer.wrap(request.getData()).getInt();
+                logger.debug("Received Data : " + receivedData);
+                receivedData++;
+                byte[] replyBuffer = ByteBuffer.allocate(Integer.BYTES).putInt(receivedData).array();
+                DatagramPacket reply = new DatagramPacket(
+                        replyBuffer,
+                        replyBuffer.length,
+                        request.getAddress(),
+                        request.getPort());
+                aSocket.send(reply);
+            }
+        } catch (SocketException e) {
+            logger.error("Socket: " + e.getMessage());
+        } catch (IOException e) {
+            logger.error("IO: " + e.getMessage());
+        } finally {
+            if (aSocket != null)
+                aSocket.close();
+
+        }
+
+    }
+
+    private static void updObjectConnection() {
+        // Default port number
+        int portNumber = 7000;
+        logger.info("Starting server on port " + portNumber + "...");
+
+        DatagramSocket serverSocket = null;
+
+        try {
+            serverSocket = new DatagramSocket(portNumber);
+            logger.info("Server started and waiting for connection...");
+
+            byte[] receiveBuffer = new byte[1000];
+
+            while (true) {
+                DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
+
+                serverSocket.receive(receivePacket);
+
+                byte[] receivedData = receivePacket.getData();
+                ByteArrayInputStream bis = new ByteArrayInputStream(receivedData);
+                ObjectInputStream ois = new ObjectInputStream(bis);
+                MessageObject receivedMessage;
+
+                try {
+                    receivedMessage = (MessageObject) ois.readObject();
+                    System.out.println("Received Message: " + receivedMessage.toString());
+                } catch (ClassNotFoundException e) {
+                    System.out.println("Error: " + e.getMessage());
+                    return;
+                } finally {
+                    ois.close();
+                    bis.close();
+                }
+
+                // Increment the number in the received message
+                receivedMessage.incrementNumber();
+                System.out.println("Incrementing value...");
+
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(bos);
+                oos.writeObject(receivedMessage);
+                oos.flush();
+
+                byte[] sendBuffer = bos.toByteArray();
+
+                DatagramPacket sendPacket = new DatagramPacket(sendBuffer,
+                        sendBuffer.length,
+                        receivePacket.getAddress(),
+                        receivePacket.getPort());
+
+                serverSocket.send(sendPacket);
+                System.out.println("Sending incremented message: " + receivedMessage.toString());
+            }
+        } catch (SocketException e) {
+            System.out.println("Socket: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO: " + e.getMessage());
+        } finally {
+            if (serverSocket != null)
+                serverSocket.close();
+        }
+
+        logger.info("Server closed");
+
+    }
 
 }

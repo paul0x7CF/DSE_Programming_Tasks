@@ -1,6 +1,8 @@
 package Client;
 
 import Server.IBankingServer;
+import jakarta.jws.WebService;
+import jakarta.jws.soap.SOAPBinding;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,6 +12,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 
+
 public class MainClient {
 
     private static final Logger logger = LogManager.getLogger(MainClient.class);
@@ -18,7 +21,7 @@ public class MainClient {
         logger.info("Starting client...");
 
         try{
-            IBankingServer stub = (IBankingServer) Naming.lookup("rmi://localhost:" + Registry.REGISTRY_PORT + "/MyRMI");
+            IBankingServer stub = (IBankingServer) Naming.lookup("//localhost:" + Registry.REGISTRY_PORT + "/MyRMI");
 
             System.out.println("Total Bank Balance: " + stub.audit());
             logger.debug("Balance of Account Nr.[0]: {}", stub.getBalance(0));

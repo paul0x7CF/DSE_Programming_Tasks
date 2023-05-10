@@ -1,7 +1,6 @@
 package Client;
 
 import Message.MessageObject;
-import Server.ClientHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
