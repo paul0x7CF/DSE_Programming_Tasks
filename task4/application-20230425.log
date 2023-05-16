@@ -1,0 +1,145 @@
+2023-04-25 15:15:18.719 [main] DEBUG Client.RPCProxy - asking for hello methode with parameter World
+2023-04-25 15:15:18.737 [main] DEBUG Client.ClientMarshaller - marshalling methode hello with parameter World
+2023-04-25 15:15:18.749 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:15:18.754 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: DSE, World, methodeResult: DSE, World 
+2023-04-25 15:15:18.754 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter World
+2023-04-25 15:15:18.754 [main] DEBUG Client.ClientMarshaller - marshalling methode goodbye with parameter World
+2023-04-25 15:15:18.755 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:15:18.757 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: I'm afraid this is a farewell, World, methodeResult: I'm afraid this is a farewell, World 
+2023-04-25 15:19:35.627 [main] DEBUG Client.RPCProxy - asking for hello methode with parameter Hello
+2023-04-25 15:19:35.633 [main] DEBUG Client.ClientMarshaller - marshalling methode hello with parameter Hello
+2023-04-25 15:19:35.635 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:19:35.640 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: DSE, Hello, methodeResult: DSE, Hello 
+2023-04-25 15:19:35.641 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter DSE
+2023-04-25 15:19:35.641 [main] DEBUG Client.ClientMarshaller - marshalling methode goodbye with parameter DSE
+2023-04-25 15:19:35.641 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:19:35.644 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: I'm afraid this is a farewell, DSE, methodeResult: I'm afraid this is a farewell, DSE 
+2023-04-25 15:19:35.644 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter TestError
+2023-04-25 15:19:35.644 [main] DEBUG Client.ClientMarshaller - marshalling methode goodbye with parameter TestError
+2023-04-25 15:19:35.645 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:19:35.647 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: I'm afraid this is a farewell, TestError, methodeResult: I'm afraid this is a farewell, TestError 
+2023-04-25 15:20:44.733 [main] DEBUG Client.RPCProxy - asking for hello methode with parameter Hello
+2023-04-25 15:20:44.750 [main] DEBUG Client.ClientMarshaller - marshalling methode hello with parameter Hello
+2023-04-25 15:20:44.752 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:20:44.757 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: hello, methodeResult: DSE, Hello 
+2023-04-25 15:20:44.757 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter DSE
+2023-04-25 15:20:44.758 [main] DEBUG Client.ClientMarshaller - marshalling methode goodbye with parameter DSE
+2023-04-25 15:20:44.758 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:20:44.760 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: goodbye, methodeResult: I'm afraid this is a farewell, DSE 
+2023-04-25 15:20:44.761 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter TestError
+2023-04-25 15:20:44.761 [main] DEBUG Client.ClientMarshaller - marshalling methode goodbye with parameter TestError
+2023-04-25 15:20:44.761 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:20:44.764 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: goodbye, methodeResult: I'm afraid this is a farewell, TestError 
+2023-04-25 15:21:39.322 [main] DEBUG Client.RPCProxy - asking for hello methode with parameter Hello
+2023-04-25 15:21:39.329 [main] DEBUG Client.ClientMarshaller - marshalling methode hello with parameter Hello
+2023-04-25 15:21:39.331 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:21:39.338 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: hello, methodeResult: DSE, Hello 
+2023-04-25 15:21:39.338 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter DSE
+2023-04-25 15:21:39.339 [main] DEBUG Client.ClientMarshaller - marshalling methode godbye with parameter DSE
+2023-04-25 15:21:39.339 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:21:39.344 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: godbye, methodeResult: Error 
+2023-04-25 15:21:39.346 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter TestError
+2023-04-25 15:21:39.346 [main] DEBUG Client.ClientMarshaller - marshalling methode godbye with parameter TestError
+2023-04-25 15:21:39.347 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:21:39.351 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: godbye, methodeResult: Error 
+2023-04-25 15:06:36.257 [main] INFO  Server.ServerRequestHandler - Server started on port 8080
+2023-04-25 15:25:42.340 [main] DEBUG Client.RPCProxy - asking for hello methode with parameter Hello
+2023-04-25 15:25:42.347 [main] DEBUG Client.ClientMarshaller - marshalling methode hello with parameter Hello
+2023-04-25 15:25:42.349 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:25:42.362 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: hello, methodeResult: DSE, Hello 
+2023-04-25 15:25:42.363 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter DSE
+2023-04-25 15:25:42.363 [main] DEBUG Client.ClientMarshaller - marshalling methode godbye with parameter DSE
+2023-04-25 15:25:42.364 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:27:45.695 [main] DEBUG Client.RPCProxy - asking for hello methode with parameter Hello
+2023-04-25 15:27:45.712 [main] DEBUG Client.ClientMarshaller - marshalling methode hello with parameter Hello
+2023-04-25 15:27:45.714 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:27:45.720 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: hello, methodeResult: DSE, Hello 
+2023-04-25 15:27:45.721 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter DSE
+2023-04-25 15:27:45.721 [main] DEBUG Client.ClientMarshaller - marshalling methode godbye with parameter DSE
+2023-04-25 15:27:45.721 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:30:05.489 [main] DEBUG Client.RPCProxy - asking for hello methode with parameter Hello
+2023-04-25 15:30:05.497 [main] DEBUG Client.ClientMarshaller - marshalling methode hello with parameter Hello
+2023-04-25 15:30:05.499 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:30:05.504 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: hello, methodeResult: DSE, Hello 
+2023-04-25 15:30:05.504 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter DSE
+2023-04-25 15:30:05.504 [main] DEBUG Client.ClientMarshaller - marshalling methode godbye with parameter DSE
+2023-04-25 15:30:05.505 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:30:36.428 [main] DEBUG Client.RPCProxy - asking for hello methode with parameter Hello
+2023-04-25 15:30:36.437 [main] DEBUG Client.ClientMarshaller - marshalling methode hello with parameter Hello
+2023-04-25 15:30:36.439 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:30:36.445 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: hello, methodeResult: DSE, Hello 
+2023-04-25 15:30:36.446 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter DSE
+2023-04-25 15:30:36.446 [main] DEBUG Client.ClientMarshaller - marshalling methode godbye with parameter DSE
+2023-04-25 15:30:36.446 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:37:58.827 [main] DEBUG Client.RPCProxy - asking for hello methode with parameter Hello
+2023-04-25 15:37:58.833 [main] DEBUG Client.ClientMarshaller - marshalling methode hello with parameter Hello
+2023-04-25 15:37:58.835 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:37:58.841 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: hello, methodeResult: DSE, Hello 
+2023-04-25 15:37:58.841 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter DSE
+2023-04-25 15:37:58.842 [main] DEBUG Client.ClientMarshaller - marshalling methode goodbye with parameter DSE
+2023-04-25 15:37:58.842 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:37:58.844 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: goodbye, methodeResult: I'm afraid this is a farewell, DSE 
+2023-04-25 15:37:58.845 [main] DEBUG Client.RPCProxy - asking for test methode with parameter Test
+2023-04-25 15:37:58.845 [main] DEBUG Client.ClientMarshaller - marshalling methode test with parameter Test
+2023-04-25 15:37:58.846 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:37:58.848 [main] ERROR Client.ClientMain - Invalid Methode
+Client.Exceptions.InvalidMethodeException: Methode not found on Server
+	at Client.ClientMarshaller.unmarshall(ClientMarshaller.java:44) ~[classes/:?]
+	at Client.ClientRequestor.request(ClientRequestor.java:10) ~[classes/:?]
+	at Client.RPCProxy.test(RPCProxy.java:27) ~[classes/:?]
+	at Client.ClientMain.main(ClientMain.java:27) [classes/:?]
+2023-04-25 15:24:47.587 [main] INFO  Server.ServerRequestHandler - Server started on port 8080
+2023-04-25 15:39:28.512 [main] DEBUG Client.RPCProxy - asking for hello methode with parameter Hello
+2023-04-25 15:39:28.519 [main] DEBUG Client.ClientMarshaller - marshalling methode hello with parameter Hello
+2023-04-25 15:39:28.521 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:39:28.529 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: hello, methodeResult: DSE, Hello 
+2023-04-25 15:39:28.530 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter DSE
+2023-04-25 15:39:28.530 [main] DEBUG Client.ClientMarshaller - marshalling methode goodbye with parameter DSE
+2023-04-25 15:39:28.530 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:39:28.533 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: goodbye, methodeResult: I'm afraid this is a farewell, DSE 
+2023-04-25 15:39:28.533 [main] DEBUG Client.RPCProxy - asking for test methode with parameter Test
+2023-04-25 15:39:28.534 [main] DEBUG Client.ClientMarshaller - marshalling methode test with parameter Test
+2023-04-25 15:39:28.534 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:39:28.537 [main] ERROR Client.ClientMain - Invalid Methode
+Client.Exceptions.InvalidMethodeException: Methode not found on Server
+	at Client.ClientMarshaller.unmarshall(ClientMarshaller.java:44) ~[classes/:?]
+	at Client.ClientRequestor.request(ClientRequestor.java:10) ~[classes/:?]
+	at Client.RPCProxy.test(RPCProxy.java:27) ~[classes/:?]
+	at Client.ClientMain.main(ClientMain.java:27) [classes/:?]
+2023-04-25 15:39:21.127 [main] INFO  Server.ServerRequestHandler - Server started on port 8080
+2023-04-25 15:39:28.524 [main] DEBUG Server.ServerRequestHandler - Client connected
+2023-04-25 15:39:28.532 [main] DEBUG Server.ServerRequestHandler - Client connected
+2023-04-25 15:39:28.536 [main] DEBUG Server.ServerRequestHandler - Client connected
+2023-04-25 15:40:18.898 [main] DEBUG Client.RPCProxy - asking for hello methode with parameter Hello
+2023-04-25 15:40:18.906 [main] DEBUG Client.ClientMarshaller - marshalling methode hello with parameter Hello
+2023-04-25 15:40:18.908 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:40:18.917 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: hello, methodeResult: DSE, Hello 
+2023-04-25 15:40:18.918 [main] DEBUG Client.RPCProxy - asking for goodbye methode with parameter DSE
+2023-04-25 15:40:18.918 [main] DEBUG Client.ClientMarshaller - marshalling methode goodbye with parameter DSE
+2023-04-25 15:40:18.919 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:40:18.922 [main] DEBUG Client.ClientMarshaller - unmarshalled Server response, methodeName: goodbye, methodeResult: I'm afraid this is a farewell, DSE 
+2023-04-25 15:40:18.923 [main] DEBUG Client.RPCProxy - asking for test methode with parameter Test
+2023-04-25 15:40:18.923 [main] DEBUG Client.ClientMarshaller - marshalling methode test with parameter Test
+2023-04-25 15:40:18.923 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:40:18.927 [main] ERROR Client.ClientMain - Invalid Methode
+Client.Exceptions.InvalidMethodeException: Methode not found on Server
+	at Client.ClientMarshaller.unmarshall(ClientMarshaller.java:44) ~[classes/:?]
+	at Client.ClientRequestor.request(ClientRequestor.java:10) ~[classes/:?]
+	at Client.RPCProxy.test(RPCProxy.java:27) ~[classes/:?]
+	at Client.ClientMain.main(ClientMain.java:27) [classes/:?]
+2023-04-25 15:40:44.183 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:40:44.194 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:40:44.198 [main] INFO  Client.ClientRequestHandler - Client Socket created
+2023-04-25 15:40:44.201 [main] ERROR Client.ClientMain - Invalid Methode
+Client.Exceptions.InvalidMethodeException: Methode not found on Server
+	at Client.ClientMarshaller.unmarshall(ClientMarshaller.java:44) ~[classes/:?]
+	at Client.ClientRequestor.request(ClientRequestor.java:10) ~[classes/:?]
+	at Client.RPCProxy.test(RPCProxy.java:27) ~[classes/:?]
+	at Client.ClientMain.main(ClientMain.java:27) [classes/:?]
+2023-04-25 15:40:12.376 [main] INFO  Server.ServerRequestHandler - Server started on port 8080
+2023-04-25 15:40:18.911 [main] DEBUG Server.ServerRequestHandler - receive request
+2023-04-25 15:40:18.921 [main] DEBUG Server.ServerRequestHandler - receive request
+2023-04-25 15:40:18.926 [main] DEBUG Server.ServerRequestHandler - receive request
+2023-04-25 15:40:44.191 [main] DEBUG Server.ServerRequestHandler - receive request
+2023-04-25 15:40:44.196 [main] DEBUG Server.ServerRequestHandler - receive request
+2023-04-25 15:40:44.200 [main] DEBUG Server.ServerRequestHandler - receive request
