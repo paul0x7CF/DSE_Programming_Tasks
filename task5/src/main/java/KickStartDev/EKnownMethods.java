@@ -1,5 +1,5 @@
 package KickStartDev;
 
-public enum KnownMethods {
+public enum EKnownMethods {
 	singleLog, removeOldLogs, increaseStorageSpace, addLogsInBulk, searchLogs;
 }
