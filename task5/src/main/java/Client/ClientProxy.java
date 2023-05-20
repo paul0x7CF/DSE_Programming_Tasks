@@ -4,10 +4,14 @@ import KickStartDev.EKnownMethods;
 import KickStartDev.IRemoteObject;
 import KickStartDev.LogEntry;
 import KickStartDev.RequestMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ClientProxy implements IRemoteObject {
+    private static final Logger logger = LogManager.getLogger(ClientProxy.class);
     @Override
     public void singleLog(LogEntry entry) throws Exception {
+        logger.debug("asking for singleLog methode with parameter {}", entry);
         ClientRequestor.invokeObjectByFireAndForget(new RequestMessage(EKnownMethods.singleLog, entry));
 
     }
