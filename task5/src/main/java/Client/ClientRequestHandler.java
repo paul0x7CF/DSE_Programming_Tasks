@@ -19,7 +19,10 @@ public class ClientRequestHandler {
             DatagramSocket clientSocket = new DatagramSocket();
             InetAddress aHost = InetAddress.getByName("localhost");
             int serverPort = 8080;
+
+            logger.debug("Creating the packet to send");
             DatagramPacket request = new DatagramPacket(dataToSend, dataToSend.length, aHost, serverPort);
+
             clientSocket.send(request);
             logger.info("Data was sent to server over UDP connection");
 
