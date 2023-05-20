@@ -1,18 +1,35 @@
 package Server;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import Client.ClientMain;
+import KickStartDev.RemoteObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import static java.lang.Thread.sleep;
+
 
 public class ServerMain {
-    public static void main(String[] args) {
 
-        ServerSocket serverSocket;
-        try {
-            serverSocket = new ServerSocket(8080);
-            Socket socket = serverSocket.accept();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private static final Logger logger = LogManager.getLogger(ServerMain.class);
+
+    public static void main(String[] args) throws InterruptedException {
+        RemoteObject myRemoteObject = new RemoteObject();
+        System.out.println(myRemoteObject);
+
+        Invoker myInvoker = new Invoker(myRemoteObject);
+        ServerRequestHandler myServerRequestHandler = new ServerRequestHandler(myInvoker);
+
+        new Thread(myServerRequestHandler).start();
+
+        int currentStorageSpace = myRemoteObject.getStorageSize();
+        while (true) {
+            sleep(10);
+
+            if (myRemoteObject.getStorageSize() != currentStorageSpace) {
+                currentStorageSpace = myRemoteObject.getStorageSize();
+                System.out.println(myRemoteObject);
+            }
         }
+
     }
 }
