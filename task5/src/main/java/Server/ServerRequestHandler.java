@@ -25,7 +25,6 @@ public class ServerRequestHandler implements Runnable {
             socket = new DatagramSocket(8080);
             logger.info("Server started on port 8080");
             while (true) {
-
                 byte[] buffer = new byte[1024];
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
 

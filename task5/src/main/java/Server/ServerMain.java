@@ -23,8 +23,7 @@ public class ServerMain {
 
         int currentStorageSpace = myRemoteObject.getStorageSize();
         while (true) {
-            sleep(10);
-
+            sleep(1);
             if (myRemoteObject.getStorageSize() != currentStorageSpace) {
                 currentStorageSpace = myRemoteObject.getStorageSize();
                 System.out.println(myRemoteObject);

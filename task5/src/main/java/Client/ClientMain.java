@@ -12,7 +12,11 @@ public class ClientMain {
 
         try {
             logger.info("Write to log");
-            logStorage.singleLog(new LogEntry("Test"));
+            for (int i = 0; i < 100; i++) {
+                logStorage.singleLog("Test " + i);;
+            }
+            final int REMOVE_BY = 50;
+            logStorage.removeOldLogs(REMOVE_BY);
         } catch (Exception e) {
             logger.error("Error while writing to log {}", e);
         }

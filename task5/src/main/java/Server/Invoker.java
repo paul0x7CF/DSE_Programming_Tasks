@@ -23,11 +23,11 @@ public class Invoker {
             switch (requestMessage.getMethod()) {
                 case singleLog -> {
                     logger.debug("invoking singleLog method");
-                    remoteObject.logSingleEntry((LogEntry) requestMessage.getRequestData());
+                    remoteObject.logSingleEntry(new LogEntry((String) requestMessage.getRequestData()));
                 }
                 case removeOldLogs -> {
                     logger.debug("invoking removeOldLogs method");
-                    //TODO: Implement this case
+                    remoteObject.removeOldLogs((int) requestMessage.getRequestData());
                 }
                 case increaseStorageSpace -> {
                     logger.debug("invoking increaseStorageSpace method");

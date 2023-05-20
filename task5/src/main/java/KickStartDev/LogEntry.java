@@ -1,8 +1,7 @@
 package KickStartDev;
 
-import java.io.Serializable;
 
-public class LogEntry implements Serializable {
+public class LogEntry {
 	private final String logEntry;
 
 	@Override
