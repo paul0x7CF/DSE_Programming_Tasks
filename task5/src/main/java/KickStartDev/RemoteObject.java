@@ -76,4 +76,8 @@ public class RemoteObject {
 	public String toString() {
 		return "Stored=" + Arrays.toString(storage) + ", nextEntryPointer=" + nextEntryPointer;
 	}
+
+	public int getStorageSize() {
+		return storage.length;
+	}
 }
