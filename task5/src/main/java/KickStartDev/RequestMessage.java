@@ -14,5 +14,9 @@ public class RequestMessage<T> implements IMarshall {
 	public T getRequestData() {
 		return requestData;
 	}
+
+	public EKnownMethods getMethod() {
+		return method;
+	}
 }
 
