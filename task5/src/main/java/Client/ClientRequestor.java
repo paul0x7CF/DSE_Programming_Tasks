@@ -9,4 +9,8 @@ public class ClientRequestor {
         ClientRequestHandler.sendMessageViaUDP(requestMessage.marshall());
 
     }
+
+    public static void handleSyncWithServer(RequestMessage requestMessage) throws Exception {
+        ClientRequestHandler.sendMessageViaTCP(requestMessage.marshall());
+    }
 }

@@ -3,10 +3,12 @@ package Client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 
 public class ClientRequestHandler {
     private static final Logger logger = LogManager.getLogger(ClientRequestHandler.class);
@@ -24,13 +26,32 @@ public class ClientRequestHandler {
             DatagramPacket request = new DatagramPacket(dataToSend, dataToSend.length, aHost, serverPort);
 
             clientSocket.send(request);
-            logger.info("Data was sent to server over UDP connection");
+            logger.debug("Data was sent to server over UDP connection");
 
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static void sendMessageViaTCP(byte[] dataToSend) throws Exception {
+        try {
+            Socket clientSocket = new Socket("localhost", 8080);
+            DataOutputStream dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
+
+            dataOutputStream.writeInt(dataToSend.length);
+            dataOutputStream.write(dataToSend);
+            logger.debug("Data was sent to server over TCP connection");
+
+            dataOutputStream.close();
+            clientSocket.close();
+
+
+        } catch (IOException e) {
+            logger.error("Error while creating socket from Type: {}, Message: {}", e.getClass(), e.getMessage());
+            throw new Exception(e);
+        }
     }
 
 }

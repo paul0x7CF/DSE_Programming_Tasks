@@ -4,21 +4,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketException;
+import java.net.*;
 
-public class ServerRequestHandler implements Runnable {
+public class UDPServerRequestHandler implements Runnable {
 
-    private static final Logger logger = LogManager.getLogger(ServerRequestHandler.class);
+    private static final Logger logger = LogManager.getLogger(UDPServerRequestHandler.class);
 
     private final Invoker invoker;
 
-    public ServerRequestHandler(Invoker invoker) {
+    public UDPServerRequestHandler(Invoker invoker) {
         this.invoker = invoker;
     }
 
-    private void startHandler() {
+    private void startUDPHandler() {
 
         DatagramSocket socket = null;
         try {
@@ -29,10 +27,10 @@ public class ServerRequestHandler implements Runnable {
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
 
                 socket.receive(request);
-                logger.info("Data was received from client over UDP connection");
+                logger.debug("Data was received from client over UDP connection");
 
                 invoker.invoke(request.getData());
-                logger.info("invocation finished");
+                logger.trace("invocation finished");
             }
         } catch (SocketException e) {
             logger.error("Error while creating socket {}", e.getMessage());
@@ -44,8 +42,10 @@ public class ServerRequestHandler implements Runnable {
         }
     }
 
+
+
     @Override
     public void run() {
-        startHandler();
+        startUDPHandler();
     }
 }

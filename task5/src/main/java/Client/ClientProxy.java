@@ -18,7 +18,7 @@ public class ClientProxy implements IRemoteObject {
     @Override
     public void removeOldLogs(int amountToRemove) throws Exception {
         logger.debug("asking for removeOldLogs methode with parameter {}", amountToRemove);
-        ClientRequestor.invokeObjectByFireAndForget(new RequestMessage(EKnownMethods.removeOldLogs, amountToRemove));
+        ClientRequestor.handleSyncWithServer(new RequestMessage(EKnownMethods.removeOldLogs, amountToRemove));
 
     }
 
@@ -28,7 +28,10 @@ public class ClientProxy implements IRemoteObject {
     }
 
     @Override
-    public void addLogsInBulk(LogEntry[] logBulk) {
+    public void addLogsInBulk(String[] logBulk) {
+        logger.debug("asking for addLogsInBulk methode with {} parameters", logBulk.length);
+        //Compromise String Array to send with the GZIP java algorithm
+        //ClientRequestor.invokeObjectByFireAndForget(new RequestMessage(EKnownMethods.addLogsInBulk, logBulk));
 
     }
 

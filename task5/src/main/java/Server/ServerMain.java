@@ -1,6 +1,5 @@
 package Server;
 
-import Client.ClientMain;
 import KickStartDev.RemoteObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,17 +16,22 @@ public class ServerMain {
         System.out.println(myRemoteObject);
 
         Invoker myInvoker = new Invoker(myRemoteObject);
-        ServerRequestHandler myServerRequestHandler = new ServerRequestHandler(myInvoker);
+        TCPServerRequestHandler myTCPServerRequestHandler = new TCPServerRequestHandler(myInvoker);
+        UDPServerRequestHandler myServerRequestHandler = new UDPServerRequestHandler(myInvoker);
 
+        new Thread(myTCPServerRequestHandler).start();
         new Thread(myServerRequestHandler).start();
 
         int currentStorageSpace = myRemoteObject.getStorageSize();
         while (true) {
-            sleep(1);
+            sleep(1000);
+            System.out.println(myRemoteObject);
+            /*
             if (myRemoteObject.getStorageSize() != currentStorageSpace) {
                 currentStorageSpace = myRemoteObject.getStorageSize();
                 System.out.println(myRemoteObject);
             }
+            */
         }
 
     }
