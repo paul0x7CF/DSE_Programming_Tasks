@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -37,10 +38,18 @@ public class TCPServerRequestHandler implements Runnable {
             dataInputStream.readFully(request, 0, request.length);
 
             invoker.invoke(request);
+
+            //TODO: check if the Sync with server is ok so
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            final int ACK = 1;
+            dataOutputStream.writeInt(ACK);
+
             logger.info("invocation finished");
 
             dataInputStream.close();
+            dataOutputStream.close();
             socket.close();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

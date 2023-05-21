@@ -3,6 +3,7 @@ package Client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -44,7 +45,11 @@ public class ClientRequestHandler {
             dataOutputStream.write(dataToSend);
             logger.debug("Data was sent to server over TCP connection");
 
+            DataInputStream dataInputStream = new DataInputStream(clientSocket.getInputStream());
+            final int ACK = dataInputStream.readInt();
+
             dataOutputStream.close();
+            dataInputStream.close();
             clientSocket.close();
 
 
