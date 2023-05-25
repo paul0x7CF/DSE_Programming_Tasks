@@ -1,5 +1,5 @@
 package KickStartDev;
 
 public enum EKnownMethods {
-	singleLog, removeOldLogs, increaseStorageSpace, addLogsInBulk, searchLogs;
+	singleLog, removeOldLogs, increaseStorageSpace, addLogsInBulk, searchLogs, SUCCESS, FAILURE;
 }

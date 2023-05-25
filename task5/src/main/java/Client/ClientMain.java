@@ -1,6 +1,5 @@
 package Client;
 
-import KickStartDev.LogEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,12 +33,27 @@ public class ClientMain {
             logger.error("Error while deleting logs");
         }
 
-            /*
-            System.out.println("Use Case 3");
-            String[] logEntries = new String[100];
-            Arrays.fill(logEntries, "BulkTest");
-            logStorage.addLogsInBulk(logEntries);
-            */
+
+        System.out.println("Use Case 3");
+        String[] logEntries = new String[100];
+        Arrays.fill(logEntries, "BulkTestLogs");
+        CallbackIncLogStorage callback = new CallbackIncLogStorage() {
+            @Override
+            public void success() {
+                logger.info("Successfully increased storage space");
+            }
+
+            @Override
+            public void failure() {
+                logger.info("Failed to increase storage space");
+            }
+        };
+        logStorage.increaseStorageSpace(logEntries.length, callback);
+        String[] compressedData = CompressData.compress(logEntries);
+
+        //logStorage.addLogsInBulk(compressedData);
+
+
 
 
     }
