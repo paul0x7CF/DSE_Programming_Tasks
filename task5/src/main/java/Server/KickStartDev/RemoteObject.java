@@ -1,4 +1,4 @@
-package KickStartDev;
+package Server.KickStartDev;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +40,7 @@ public class RemoteObject {
         assert (!Objects.isNull(logBulk));
 
         try {
-            increaseLogStorage(logBulk.length);
+            //increaseLogStorage(logBulk.length);
             for (int i = 0; i < logBulk.length; i++) {
                 logSingleEntry(logBulk[i]);
             }
@@ -62,7 +62,7 @@ public class RemoteObject {
         return matchingEntries.toArray(new LogEntry[matchingEntries.size()]);
     }
 
-    private int increaseLogStorage(int increaseBy) throws Exception {
+    public int increaseLogStorage(int increaseBy) throws Exception {
         assert (increaseBy > 0);
 
         int oldStorageSpace = storage.length;

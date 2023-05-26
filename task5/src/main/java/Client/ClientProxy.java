@@ -1,9 +1,10 @@
 package Client;
 
-import KickStartDev.EKnownMethods;
-import KickStartDev.IRemoteObject;
-import KickStartDev.LogEntry;
-import KickStartDev.RequestMessage;
+import Shared.EKnownMethods;
+import Server.KickStartDev.IRemoteObject;
+import Server.KickStartDev.LogEntry;
+import Shared.RequestMessage;
+import Shared.EResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,20 +13,20 @@ public class ClientProxy implements IRemoteObject {
     @Override
     public void singleLog(String entry) throws Exception {
         logger.debug("asking for singleLog methode with parameter {}", entry);
-        ClientRequestor.invokeObjectByFireAndForget(new RequestMessage(EKnownMethods.singleLog, entry, false));
+        ClientRequestor.invokeObjectByFireAndForget(new RequestMessage(EKnownMethods.singleLog, entry, EResult.NO_RESULT));
 
     }
     @Override
     public void removeOldLogs(int amountToRemove) throws Exception {
         logger.debug("asking for removeOldLogs methode with parameter {}", amountToRemove);
-        ClientRequestor.handleSyncWithServer(new RequestMessage(EKnownMethods.removeOldLogs, amountToRemove, false));
+        ClientRequestor.handleSyncWithServer(new RequestMessage(EKnownMethods.removeOldLogs, amountToRemove, EResult.ACK_ON_TARGET));
 
     }
 
     @Override
     public void increaseStorageSpace(int increaseBy, CallbackIncLogStorage callback) {
         logger.debug("asking for increaseStorageSpace methode with parameter {}", increaseBy);
-        ClientRequestor.handleCallback(new RequestMessage(EKnownMethods.increaseStorageSpace, increaseBy, true));
+        ClientRequestor.handleCallback(new RequestMessage(EKnownMethods.increaseStorageSpace, increaseBy, EResult.CALLBACK));
 
     }
 

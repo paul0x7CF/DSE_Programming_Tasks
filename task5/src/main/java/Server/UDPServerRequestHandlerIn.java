@@ -6,13 +6,13 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.net.*;
 
-public class UDPServerRequestHandler implements Runnable {
+public class UDPServerRequestHandlerIn implements Runnable {
 
-    private static final Logger logger = LogManager.getLogger(UDPServerRequestHandler.class);
+    private static final Logger logger = LogManager.getLogger(UDPServerRequestHandlerIn.class);
 
     private final Invoker invoker;
 
-    public UDPServerRequestHandler(Invoker invoker) {
+    public UDPServerRequestHandlerIn(Invoker invoker) {
         this.invoker = invoker;
     }
 

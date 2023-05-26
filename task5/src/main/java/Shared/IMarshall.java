@@ -1,4 +1,4 @@
-package KickStartDev;
+package Shared;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

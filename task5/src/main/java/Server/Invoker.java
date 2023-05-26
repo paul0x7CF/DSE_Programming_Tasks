@@ -1,9 +1,10 @@
 package Server;
 
-import KickStartDev.IMarshall;
-import KickStartDev.LogEntry;
-import KickStartDev.RemoteObject;
-import KickStartDev.RequestMessage;
+import Shared.IMarshall;
+import Server.KickStartDev.LogEntry;
+import Server.KickStartDev.RemoteObject;
+import Shared.RequestMessage;
+import Shared.EResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,16 +23,20 @@ public class Invoker {
 
             switch (requestMessage.getMethod()) {
                 case singleLog -> {
-                    logger.debug("invoking singleLog method");
+                    logger.info("invoking singleLog method");
                     remoteObject.logSingleEntry(new LogEntry((String) requestMessage.getRequestData()));
                 }
                 case removeOldLogs -> {
-                    logger.debug("invoking removeOldLogs method");
+                    logger.info("invoking removeOldLogs method");
                     remoteObject.removeOldLogs((int) requestMessage.getRequestData());
                 }
                 case increaseStorageSpace -> {
-                    logger.debug("invoking increaseStorageSpace method");
-                    //TODO: Implement this case
+                    logger.info("invoking increaseStorageSpace method");
+                    if(requestMessage.getResultAs().equals(EResult.CALLBACK)) {
+                        logger.debug("invoking callback");
+                        CallbackProxy callbackProxy = new CallbackProxy();
+                        callbackProxy.callback(true);
+                    }
                 }
                 case addLogsInBulk -> {
                     logger.debug("invoking addLogsInBulk method");

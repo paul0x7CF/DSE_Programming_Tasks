@@ -1,17 +1,24 @@
 package Server;
 
 import Client.CallbackIncLogStorage;
-import KickStartDev.EKnownMethods;
-import KickStartDev.ResponseMessage;
+import Shared.EKnownMethods;
+import Shared.ResponseMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CallbackProxy implements CallbackIncLogStorage {
-    @Override
-    public void success() {
-        new ResponseMessage("Callback", EKnownMethods.SUCCESS);
-    }
+
+    private static final Logger logger = LogManager.getLogger(CallbackProxy.class);
 
     @Override
-    public void failure() {
-        new ResponseMessage("Callback", EKnownMethods.FAILURE);
+    public void callback(boolean isSuccessful) {
+        ResponseMessage responseMessage = new ResponseMessage(EKnownMethods.Callback, isSuccessful);
+        try {
+            ServerRequestHandlerOut.sendViaUDP(responseMessage.marshall());
+        } catch (Exception e) {
+            logger.error("Error while marshalling the message");
+            throw new RuntimeException(e);
+        }
     }
+
 }

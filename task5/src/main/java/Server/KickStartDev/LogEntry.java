@@ -1,4 +1,4 @@
-package KickStartDev;
+package Server.KickStartDev;
 
 
 public class LogEntry {

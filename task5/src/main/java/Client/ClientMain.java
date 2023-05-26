@@ -11,6 +11,8 @@ public class ClientMain {
 
     public static void main(String[] args) {
         ClientProxy logStorage = new ClientProxy();
+        UDPClientRequestHandlerIn udpClientRequestHandlerIn = new UDPClientRequestHandlerIn();
+        new Thread(udpClientRequestHandlerIn).start();
 
         try {
             System.out.println("Use Case 1");
@@ -39,17 +41,14 @@ public class ClientMain {
         Arrays.fill(logEntries, "BulkTestLogs");
         CallbackIncLogStorage callback = new CallbackIncLogStorage() {
             @Override
-            public void success() {
+            public void callback(boolean isSuccessful) {
                 logger.info("Successfully increased storage space");
             }
 
-            @Override
-            public void failure() {
-                logger.info("Failed to increase storage space");
-            }
         };
         logStorage.increaseStorageSpace(logEntries.length, callback);
         String[] compressedData = CompressData.compress(logEntries);
+        logger.debug("Do something");
 
         //logStorage.addLogsInBulk(compressedData);
 

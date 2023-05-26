@@ -1,4 +1,4 @@
-package KickStartDev;
+package Server.KickStartDev;
 
 import Client.CallbackIncLogStorage;
 

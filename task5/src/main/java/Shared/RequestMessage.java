@@ -1,16 +1,20 @@
-package KickStartDev;
+package Shared;
 
+
+import Shared.EKnownMethods;
+import Shared.EResult;
+import Shared.IMarshall;
 
 public class RequestMessage<T> implements IMarshall {
 	private final EKnownMethods method;
+	private final EResult resultAs;
 	private final T requestData;
-	private final boolean isCallback;
 
-	public RequestMessage(EKnownMethods method, T requestData, boolean isCallback) {
+	public RequestMessage(EKnownMethods method, T requestData, EResult resultAs) {
 		super();
 		this.method = method;
 		this.requestData = requestData;
-		this.isCallback = isCallback;
+		this.resultAs = resultAs;
 	}
 
 	public T getRequestData() {
@@ -19,6 +23,9 @@ public class RequestMessage<T> implements IMarshall {
 
 	public EKnownMethods getMethod() {
 		return method;
+	}
+	public EResult getResultAs() {
+		return resultAs;
 	}
 }
 

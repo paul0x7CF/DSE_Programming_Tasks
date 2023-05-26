@@ -1,6 +1,6 @@
 package Server;
 
-import KickStartDev.RemoteObject;
+import Server.KickStartDev.RemoteObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,8 +16,8 @@ public class ServerMain {
         System.out.println(myRemoteObject);
 
         Invoker myInvoker = new Invoker(myRemoteObject);
-        TCPServerRequestHandler myTCPServerRequestHandler = new TCPServerRequestHandler(myInvoker);
-        UDPServerRequestHandler myServerRequestHandler = new UDPServerRequestHandler(myInvoker);
+        TCPServerRequestHandlerIn myTCPServerRequestHandler = new TCPServerRequestHandlerIn(myInvoker);
+        UDPServerRequestHandlerIn myServerRequestHandler = new UDPServerRequestHandlerIn(myInvoker);
 
         new Thread(myTCPServerRequestHandler).start();
         new Thread(myServerRequestHandler).start();

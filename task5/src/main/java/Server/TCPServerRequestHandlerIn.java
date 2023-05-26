@@ -1,5 +1,8 @@
 package Server;
 
+import Shared.IMarshall;
+import Shared.RequestMessage;
+import Shared.EResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,14 +12,14 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class TCPServerRequestHandler implements Runnable {
+public class TCPServerRequestHandlerIn implements Runnable {
 
-    private static final Logger logger = LogManager.getLogger(TCPServerRequestHandler.class);
+    private static final Logger logger = LogManager.getLogger(TCPServerRequestHandlerIn.class);
 
     private final Invoker invoker;
     ServerSocket serverSocket;
 
-    public TCPServerRequestHandler(Invoker invoker) {
+    public TCPServerRequestHandlerIn(Invoker invoker) {
         this.invoker = invoker;
         try {
             this.serverSocket = new ServerSocket(8080);
@@ -36,29 +39,34 @@ public class TCPServerRequestHandler implements Runnable {
 
             byte[] request = new byte[dataInputStream.readInt()];
             dataInputStream.readFully(request, 0, request.length);
+            logger.trace("ACK on Transport");
+
 
             invoker.invoke(request);
 
-            //TODO: check if the Sync with server is ok so
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            final int ACK = 1;
-            dataOutputStream.writeInt(ACK);
-
+            RequestMessage requestMessage = IMarshall.unmarshall(request);
+            if (requestMessage.getResultAs().equals(EResult.ACK_ON_TARGET)) {
+                logger.trace("ACK on target");
+                DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                final int ACK = 1;
+                dataOutputStream.writeInt(ACK);
+                dataOutputStream.close();
+            }
             logger.info("invocation finished");
 
             dataInputStream.close();
-            dataOutputStream.close();
             socket.close();
 
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public void run() {
-        while (true)
-        {
+        while (true) {
             startTCPHandler();
         }
 

@@ -1,6 +1,8 @@
 package Client;
 
-import KickStartDev.RequestMessage;
+import Shared.IMarshall;
+import Shared.RequestMessage;
+import Shared.ResponseMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +13,7 @@ public class ClientRequestor {
     //The Class handles the requests to the Remote Object on the server
     public static void invokeObjectByFireAndForget(RequestMessage requestMessage){
         try {
-            ClientRequestHandler.sendMessageViaUDP(requestMessage.marshall());
+            ClientRequestHandlerOut.sendMessageViaUDP(requestMessage.marshall());
         } catch (Exception e) {
             logger.error("Error while marshalling the message");
             throw new RuntimeException(e);
@@ -21,7 +23,7 @@ public class ClientRequestor {
 
     public static void handleSyncWithServer(RequestMessage requestMessage) {
         try {
-            ClientRequestHandler.sendMessageViaTCP(requestMessage.marshall());
+            ClientRequestHandlerOut.sendMessageViaTCPTargetAck(requestMessage.marshall());
         } catch (Exception e) {
             logger.error("Error while marshalling the message");
             throw new RuntimeException(e);
@@ -30,9 +32,24 @@ public class ClientRequestor {
 
     public static void handleCallback(RequestMessage requestMessage){
         try {
-            ClientRequestHandler.sendMessageViaTCP(requestMessage.marshall());
+            ClientRequestHandlerOut.sendMessageViaTCPTransportACK(requestMessage.marshall());
         } catch (Exception e) {
             logger.error("Error while marshalling the message");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void handleResponse(byte[] data) {
+
+        try {
+            ResponseMessage responseMessage = IMarshall.unmarshall(data);
+            switch (responseMessage.getMethod()){
+                case Callback -> {
+                    logger.info("Callback received from server");
+
+                }
+            }
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
