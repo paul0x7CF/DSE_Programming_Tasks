@@ -1,10 +1,8 @@
 package Server;
 
-import Shared.IMarshall;
+import Shared.*;
 import Server.KickStartDev.LogEntry;
 import Server.KickStartDev.RemoteObject;
-import Shared.RequestMessage;
-import Shared.EResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,22 +27,33 @@ public class Invoker {
                 case removeOldLogs -> {
                     logger.info("invoking removeOldLogs method");
                     remoteObject.removeOldLogs((int) requestMessage.getRequestData());
+                    return new byte[0];
                 }
                 case increaseStorageSpace -> {
                     logger.info("invoking increaseStorageSpace method");
+                    final int resultInc = remoteObject.increaseLogStorage((int) requestMessage.getRequestData());
+
                     if(requestMessage.getResultAs().equals(EResult.CALLBACK)) {
-                        logger.debug("invoking callback");
+                        logger.debug("invoking callback with result {}", resultInc);
                         CallbackProxy callbackProxy = new CallbackProxy();
-                        callbackProxy.callback(true);
+                        callbackProxy.callback(resultInc);
                     }
                 }
                 case addLogsInBulk -> {
                     logger.debug("invoking addLogsInBulk method");
-                    //TODO: Implement this case
+                    // TODO: Implement this case
                 }
                 case searchLogs -> {
-                    logger.debug("invoking searchLogs method");
-                    //TODO: Implement this case
+                    logger.info("invoking searchLogs method");
+                    LogEntry[] foundLogs = remoteObject.search((String) requestMessage.getRequestData());
+                    String[] foundLogsAsString = new String[foundLogs.length];
+                    for (int i = 0; i < foundLogs.length; i++) {
+                        foundLogsAsString[i] = foundLogs[i].toString();
+                    }
+                    ResponseMessage responseMessage = new ResponseMessage(EKnownMethods.searchLogs, foundLogsAsString);
+                    return responseMessage.marshall();
+
+
                 }
             }
 

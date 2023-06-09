@@ -11,6 +11,12 @@ import java.net.SocketException;
 
 public class UDPClientRequestHandlerIn implements Runnable{
 
+    ClientRequestor requestor;
+
+    public UDPClientRequestHandlerIn(ClientRequestor clientRequestor) {
+        this.requestor = clientRequestor;
+    }
+
     private static final Logger logger = LogManager.getLogger(UDPClientRequestHandlerIn.class);
 
     private void handleMessage() {
@@ -25,7 +31,7 @@ public class UDPClientRequestHandlerIn implements Runnable{
                 logger.info("Listening for response from server on Port {}", port);
                 socket.receive(response);
                 logger.debug("Response received from server");
-                ClientRequestor.handleResponse(response.getData());
+                requestor.handleResponse(response.getData());
             }
 
         } catch (SocketException e) {

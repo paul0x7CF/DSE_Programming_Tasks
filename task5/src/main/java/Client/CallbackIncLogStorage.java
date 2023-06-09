@@ -2,5 +2,5 @@ package Client;
 
 public interface CallbackIncLogStorage {
 
-    public void callback(boolean isSuccessful);
+    public void callback(int isIncBy);
 }

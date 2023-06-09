@@ -6,12 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="25978d8e-91ca-44c2-a290-f0f6b16b6962" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../task2/src/main/java/Client/ConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task2/src/main/java/Client/ConnectionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../task2/src/main/java/Client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task2/src/main/java/Client/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../task2/src/main/java/Server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task2/src/main/java/Server/ThreadingHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../task2/src/main/java/Server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task2/src/main/java/Server/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../task3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../task3/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../task3/src/main/java/Client/MainClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task3/src/main/java/Client/MainClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task5/src/main/java/Client/CallbackIncLogStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task5/src/main/java/Client/CallbackIncLogStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task5/src/main/java/Client/ClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task5/src/main/java/Client/ClientMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task5/src/main/java/Client/ClientProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task5/src/main/java/Client/ClientProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task5/src/main/java/Client/ClientRequestor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task5/src/main/java/Client/ClientRequestor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task5/src/main/java/Client/UDPClientRequestHandlerIn.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task5/src/main/java/Client/UDPClientRequestHandlerIn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task5/src/main/java/Server/CallbackProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task5/src/main/java/Server/CallbackProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task5/src/main/java/Server/Invoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task5/src/main/java/Server/Invoker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task5/src/main/java/Server/KickStartDev/RemoteObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task5/src/main/java/Server/KickStartDev/RemoteObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task5/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../task5/src/main/resources/log4j2.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +66,8 @@
       <workItem from="1682457379862" duration="701000" />
       <workItem from="1682686114321" duration="1968000" />
       <workItem from="1682723525365" duration="127000" />
+      <workItem from="1685200413551" duration="611000" />
+      <workItem from="1685365737040" duration="603000" />
     </task>
     <servers />
   </component>

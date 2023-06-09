@@ -35,7 +35,7 @@ public class ClientRequestHandlerOut {
 
     }
 
-    public static void sendMessageViaTCPTargetAck(byte[] dataToSend) throws Exception {
+    public static byte[] sendMessageViaTCPTargetAck(byte[] dataToSend) throws Exception {
         try {
             Socket clientSocket = new Socket("localhost", 8080);
             DataOutputStream dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
@@ -45,12 +45,15 @@ public class ClientRequestHandlerOut {
             logger.debug("Data was sent to server over TCP connection with ACK On Target");
 
             DataInputStream dataInputStream = new DataInputStream(clientSocket.getInputStream());
-            final int ACK = dataInputStream.readInt();
+            byte[] response = new byte[dataInputStream.readInt()];
+            dataInputStream.readFully(response, 0, response.length);
+            logger.trace("received response from server");
 
             dataOutputStream.close();
             dataInputStream.close();
             clientSocket.close();
 
+            return response;
 
         } catch (IOException e) {
             logger.error("Error while creating socket from Type: {}, Message: {}", e.getClass(), e.getMessage());
@@ -58,7 +61,7 @@ public class ClientRequestHandlerOut {
         }
     }
 
-    public static void sendMessageViaTCPTransportACK(byte[] dataToSend) throws Exception {
+    public static void sendMessageViaTCPTransportACK(byte[] dataToSend) throws IOException {
         try {
             Socket clientSocket = new Socket("localhost", 8080);
             DataOutputStream dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
@@ -74,7 +77,7 @@ public class ClientRequestHandlerOut {
 
         } catch (IOException e) {
             logger.error("Error while creating socket from Type: {}, Message: {}", e.getClass(), e.getMessage());
-            throw new Exception(e);
+            throw new IOException(e);
         }
     }
 

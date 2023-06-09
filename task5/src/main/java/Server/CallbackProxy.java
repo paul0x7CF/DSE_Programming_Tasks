@@ -11,8 +11,8 @@ public class CallbackProxy implements CallbackIncLogStorage {
     private static final Logger logger = LogManager.getLogger(CallbackProxy.class);
 
     @Override
-    public void callback(boolean isSuccessful) {
-        ResponseMessage responseMessage = new ResponseMessage(EKnownMethods.Callback, isSuccessful);
+    public void callback(int isIncBy) {
+        ResponseMessage responseMessage = new ResponseMessage(EKnownMethods.increaseStorageSpace, isIncBy);
         try {
             ServerRequestHandlerOut.sendViaUDP(responseMessage.marshall());
         } catch (Exception e) {

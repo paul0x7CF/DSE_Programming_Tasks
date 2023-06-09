@@ -1,6 +1,7 @@
 package Server.KickStartDev;
 
 import Client.CallbackIncLogStorage;
+import Client.PollSearch;
 
 public interface IRemoteObject {
 
@@ -9,7 +10,7 @@ public interface IRemoteObject {
     public void increaseStorageSpace(int increaseBy, CallbackIncLogStorage callback);
     void addLogsInBulk(String[] logBulk);
 
-    public LogEntry[] searchLogs(String searchTerm);
+    public PollSearch searchLogs(String searchTerm);
 
 
 }

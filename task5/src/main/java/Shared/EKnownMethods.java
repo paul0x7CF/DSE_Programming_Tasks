@@ -6,5 +6,4 @@ public enum EKnownMethods {
 	increaseStorageSpace,
 	addLogsInBulk,
 	searchLogs,
-	Callback
 }

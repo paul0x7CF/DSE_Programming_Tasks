@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 
 public class ClientMain {
@@ -11,14 +12,12 @@ public class ClientMain {
 
     public static void main(String[] args) {
         ClientProxy logStorage = new ClientProxy();
-        UDPClientRequestHandlerIn udpClientRequestHandlerIn = new UDPClientRequestHandlerIn();
-        new Thread(udpClientRequestHandlerIn).start();
 
-        try {
+
+        /*try {
             System.out.println("Use Case 1");
             for (int i = 0; i < 100; i++) {
                 logStorage.singleLog("Test " + i);
-                ;
             }
         } catch (Exception e) {
             logger.error("Error while writing to log");
@@ -33,24 +32,40 @@ public class ClientMain {
             }
         } catch (Exception e) {
             logger.error("Error while deleting logs");
-        }
+        }*/
 
 
-        System.out.println("Use Case 3");
+       /* System.out.println("Use Case 3");
         String[] logEntries = new String[100];
         Arrays.fill(logEntries, "BulkTestLogs");
-        CallbackIncLogStorage callback = new CallbackIncLogStorage() {
-            @Override
-            public void callback(boolean isSuccessful) {
-                logger.info("Successfully increased storage space");
-            }
+        final String[][] compressedHolder = new String[][]{new String[1]};
+        CallbackIncLogStorage callbackOnInc = isIncBy -> {
+            logger.info("Successfully increased storage space By {}", isIncBy);
+            logger.debug("Adding logs in bulk");
+            CallbackOnCompressed callbackOnCompressed = isCompressed -> {
+                logger.info("Successfully added logs in bulk");
+                logStorage.addLogsInBulk(isCompressed);
+            };
+            logStorage.addLogsInBulk(compressedHolder[0]);
 
         };
-        logStorage.increaseStorageSpace(logEntries.length, callback);
+        
+        logStorage.increaseStorageSpace(logEntries.length, callbackOnInc);
         String[] compressedData = CompressData.compress(logEntries);
+
+        compressedHolder[0] = CompressData.compress(logEntries);
         logger.debug("Do something");
 
-        //logStorage.addLogsInBulk(compressedData);
+        //logStorage.addLogsInBulk(compressedData);*/
+
+        System.out.println("Use Case 4");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter search term:");
+        String searchTerm = scanner.nextLine();
+        scanner.close();
+        System.out.println(searchTerm);
+
+        PollSearch pollSearch = logStorage.searchLogs(searchTerm);
 
 
 

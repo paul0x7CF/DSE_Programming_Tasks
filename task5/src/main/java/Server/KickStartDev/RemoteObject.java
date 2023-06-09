@@ -1,13 +1,20 @@
 package Server.KickStartDev;
 
+import Server.UDPServerRequestHandlerIn;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
 public class RemoteObject {
+
+    private static final Logger logger = LogManager.getLogger(RemoteObject.class);
+
     private LogEntry[] storage = new LogEntry[0];
     private int nextEntryPointer = 0;
-    private final int MAX_LOG_ENTRIES = 100;
+    private final int MAX_LOG_ENTRIES = 1000;
 
     public synchronized void logSingleEntry(LogEntry entry) {
         assert (!Objects.isNull(entry));
@@ -64,9 +71,11 @@ public class RemoteObject {
 
     public int increaseLogStorage(int increaseBy) throws Exception {
         assert (increaseBy > 0);
+        Thread.sleep(1000);
 
         int oldStorageSpace = storage.length;
         int newStorageSpace = nextEntryPointer + increaseBy;
+        logger.trace("needed Storage Space for: {} , current Storage is: {}, thereof occupied: {}", increaseBy, oldStorageSpace, nextEntryPointer);
 
         if (newStorageSpace > MAX_LOG_ENTRIES) {
             throw new Exception("Storage space exceeded");

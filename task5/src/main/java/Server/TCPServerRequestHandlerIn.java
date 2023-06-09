@@ -42,14 +42,16 @@ public class TCPServerRequestHandlerIn implements Runnable {
             logger.trace("ACK on Transport");
 
 
-            invoker.invoke(request);
+            byte[] response = invoker.invoke(request);
 
+            // this if statement is to check
+            // if the Client is waiting for a response after invoking
+            // Called ack on target
             RequestMessage requestMessage = IMarshall.unmarshall(request);
             if (requestMessage.getResultAs().equals(EResult.ACK_ON_TARGET)) {
                 logger.trace("ACK on target");
                 DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-                final int ACK = 1;
-                dataOutputStream.writeInt(ACK);
+                dataOutputStream.writeInt(response.length);
                 dataOutputStream.close();
             }
             logger.info("invocation finished");
