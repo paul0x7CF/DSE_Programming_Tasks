@@ -29,6 +29,7 @@ public class PollSearchListener implements Runnable{
             for(String eachResult : searchResults){
                 this.pollSearch.addSearchResult(eachResult);
             }
+            this.pollSearch.setSearchComplete(true);
             logger.debug("Received search results added to pollSearch object");
 
         } catch (Exception e) {

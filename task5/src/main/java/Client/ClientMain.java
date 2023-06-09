@@ -14,7 +14,7 @@ public class ClientMain {
         ClientProxy logStorage = new ClientProxy();
 
 
-        /*try {
+        try {
             System.out.println("Use Case 1");
             for (int i = 0; i < 100; i++) {
                 logStorage.singleLog("Test " + i);
@@ -32,7 +32,7 @@ public class ClientMain {
             }
         } catch (Exception e) {
             logger.error("Error while deleting logs");
-        }*/
+        }
 
 
        /* System.out.println("Use Case 3");
@@ -53,7 +53,7 @@ public class ClientMain {
         logStorage.increaseStorageSpace(logEntries.length, callbackOnInc);
         String[] compressedData = CompressData.compress(logEntries);
 
-        compressedHolder[0] = CompressData.compress(logEntries);
+        compressedHolder[0] = asCompressData.compress(logEntries);
         logger.debug("Do something");
 
         //logStorage.addLogsInBulk(compressedData);*/
@@ -63,12 +63,17 @@ public class ClientMain {
         System.out.println("Enter search term:");
         String searchTerm = scanner.nextLine();
         scanner.close();
-        System.out.println(searchTerm);
-
         PollSearch pollSearch = logStorage.searchLogs(searchTerm);
-
-
-
+        while (!pollSearch.isSearchComplete()) {
+            logger.debug("Waiting for search to complete");
+        }
+        if(pollSearch.isSearchComplete()) {
+            System.out.println("Search complete");
+            System.out.println("Found" + pollSearch.getSearchResults().size() + "matches");
+            for (String result : pollSearch.getSearchResults()) {
+                System.out.println(result);
+            }
+        }
 
     }
 }

@@ -15,7 +15,7 @@ public class ClientRequestHandlerOut {
     private static final Logger logger = LogManager.getLogger(ClientRequestHandlerOut.class);
 
     //The Class handled the network communication with the server
-    public static void sendMessageViaUDP(byte[] dataToSend) {
+    public static void sendMessageViaUDPNoAck(byte[] dataToSend) {
 
         try {
             //Create the socket to send the data
@@ -40,12 +40,15 @@ public class ClientRequestHandlerOut {
             Socket clientSocket = new Socket("localhost", 8080);
             DataOutputStream dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
 
+            // Write the length of the data to the stream
             dataOutputStream.writeInt(dataToSend.length);
+            // Write the data to the stream
             dataOutputStream.write(dataToSend);
             logger.debug("Data was sent to server over TCP connection with ACK On Target");
 
             DataInputStream dataInputStream = new DataInputStream(clientSocket.getInputStream());
             byte[] response = new byte[dataInputStream.readInt()];
+            logger.trace("response received from server with {} bytes", response.length);
             dataInputStream.readFully(response, 0, response.length);
             logger.trace("received response from server");
 
@@ -56,7 +59,7 @@ public class ClientRequestHandlerOut {
             return response;
 
         } catch (IOException e) {
-            logger.error("Error while creating socket from Type: {}, Message: {}", e.getClass(), e.getMessage());
+            logger.error("Error in the Communication from Type: {}, Message: {}", e.getClass(), e.getMessage());
             throw new Exception(e);
         }
     }
@@ -76,7 +79,7 @@ public class ClientRequestHandlerOut {
 
 
         } catch (IOException e) {
-            logger.error("Error while creating socket from Type: {}, Message: {}", e.getClass(), e.getMessage());
+            logger.error("Error in the Communication from Type: {}, Message: {}", e.getClass(), e.getMessage());
             throw new IOException(e);
         }
     }

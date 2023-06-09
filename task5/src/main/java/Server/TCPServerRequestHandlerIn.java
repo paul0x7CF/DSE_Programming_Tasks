@@ -49,9 +49,13 @@ public class TCPServerRequestHandlerIn implements Runnable {
             // Called ack on target
             RequestMessage requestMessage = IMarshall.unmarshall(request);
             if (requestMessage.getResultAs().equals(EResult.ACK_ON_TARGET)) {
-                logger.trace("ACK on target");
+                logger.trace("ACK on target, Sending response with {} bytes to client", response.length);
                 DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                logger.trace("Sending response to client");
+                // Write the length of the data to the stream
                 dataOutputStream.writeInt(response.length);
+                // Write the data to the stream
+                dataOutputStream.write(response);
                 dataOutputStream.close();
             }
             logger.info("invocation finished");

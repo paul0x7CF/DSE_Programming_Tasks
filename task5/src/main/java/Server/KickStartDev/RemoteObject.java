@@ -71,7 +71,6 @@ public class RemoteObject {
 
     public int increaseLogStorage(int increaseBy) throws Exception {
         assert (increaseBy > 0);
-        Thread.sleep(1000);
 
         int oldStorageSpace = storage.length;
         int newStorageSpace = nextEntryPointer + increaseBy;

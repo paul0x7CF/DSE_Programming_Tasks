@@ -20,7 +20,7 @@ public class ClientRequestor {
     //The Class handles the requests to the Remote Object on the server
     public static void invokeObjectByFireAndForget(RequestMessage requestMessage){
         try {
-            ClientRequestHandlerOut.sendMessageViaUDP(requestMessage.marshall());
+            ClientRequestHandlerOut.sendMessageViaUDPNoAck(requestMessage.marshall());
         } catch (Exception e) {
             logger.error("Error while marshalling the message");
             throw new RuntimeException(e);
@@ -49,7 +49,7 @@ public class ClientRequestor {
 
     public PollSearch handlePolling(RequestMessage requestMessage) {
         this.pollSearchObject = new PollSearch();
-        new Thread(new PollSearchListener(this.pollSearchObject, requestMessage)).start();
+        new Thread(new PollSearchListener(this.pollSearchObject, requestMessage),"PollListener").start();
         return this.pollSearchObject;
     }
 

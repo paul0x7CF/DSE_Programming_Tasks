@@ -27,7 +27,7 @@ public class Invoker {
                 case removeOldLogs -> {
                     logger.info("invoking removeOldLogs method");
                     remoteObject.removeOldLogs((int) requestMessage.getRequestData());
-                    return new byte[0];
+                    return new byte[1];
                 }
                 case increaseStorageSpace -> {
                     logger.info("invoking increaseStorageSpace method");
@@ -50,6 +50,7 @@ public class Invoker {
                     for (int i = 0; i < foundLogs.length; i++) {
                         foundLogsAsString[i] = foundLogs[i].toString();
                     }
+                    logger.debug("found {} logs", foundLogsAsString.length);
                     ResponseMessage responseMessage = new ResponseMessage(EKnownMethods.searchLogs, foundLogsAsString);
                     return responseMessage.marshall();
 

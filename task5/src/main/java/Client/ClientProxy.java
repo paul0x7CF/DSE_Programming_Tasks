@@ -41,9 +41,7 @@ public class ClientProxy implements IRemoteObject {
 
     @Override
     public PollSearch searchLogs(String searchTerm) {
-        //return new LogEntry[0];
-        //TODO: implement logic
-        requestor.handlePolling(new RequestMessage(EKnownMethods.searchLogs, searchTerm, EResult.ACK_ON_TARGET));
-        return null;
+        PollSearch resultPoll = requestor.handlePolling(new RequestMessage(EKnownMethods.searchLogs, searchTerm, EResult.ACK_ON_TARGET));
+        return resultPoll;
     }
 }
