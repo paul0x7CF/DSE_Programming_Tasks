@@ -19,8 +19,8 @@ public class ServerMain {
         TCPServerRequestHandlerIn myTCPServerRequestHandler = new TCPServerRequestHandlerIn(myInvoker);
         UDPServerRequestHandlerIn myServerRequestHandler = new UDPServerRequestHandlerIn(myInvoker);
 
-        new Thread(myTCPServerRequestHandler).start();
-        new Thread(myServerRequestHandler).start();
+        new Thread(myTCPServerRequestHandler,"TCP-Input").start();
+        new Thread(myServerRequestHandler,"UDP-Input").start();
 
         int currentStorageSpace = myRemoteObject.getStorageSize();
         while (true) {

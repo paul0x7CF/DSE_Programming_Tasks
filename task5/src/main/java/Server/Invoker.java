@@ -48,7 +48,7 @@ public class Invoker {
                     LogEntry[] foundLogs = remoteObject.search((String) requestMessage.getRequestData());
                     String[] foundLogsAsString = new String[foundLogs.length];
                     for (int i = 0; i < foundLogs.length; i++) {
-                        foundLogsAsString[i] = foundLogs[i].toString();
+                        foundLogsAsString[i] = foundLogs[i].getLogEntry();
                     }
                     logger.debug("found {} logs", foundLogsAsString.length);
                     ResponseMessage responseMessage = new ResponseMessage(EKnownMethods.searchLogs, foundLogsAsString);
