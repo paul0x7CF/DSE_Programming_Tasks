@@ -1,0 +1,15 @@
+2023-06-18 21:05:06,294 INFO [main] Starting Main using Java 20 with PID 10644 (C:\Users\paulf\OneDrive\Uni\23_SS\DSE\DSE_Programming_Tasks\task7\target\classes started by paulf in C:\Users\paulf\OneDrive\Uni\23_SS\DSE\DSE_Programming_Tasks\task7)
+2023-06-18 21:05:06,297 INFO [main] No active profile set, falling back to 1 default profile: "default"
+2023-06-18 21:05:07,102 INFO [main] Started Main in 1.331 seconds (process running for 2.591)
+2023-06-18 21:05:45,956 INFO [main] Starting Main using Java 20 with PID 12536 (C:\Users\paulf\OneDrive\Uni\23_SS\DSE\DSE_Programming_Tasks\task7\target\classes started by paulf in C:\Users\paulf\OneDrive\Uni\23_SS\DSE\DSE_Programming_Tasks\task7)
+2023-06-18 21:05:45,959 INFO [main] No active profile set, falling back to 1 default profile: "default"
+2023-06-18 21:05:46,683 INFO [main] Started Main in 1.225 seconds (process running for 2.336)
+2023-06-18 21:11:42,408 INFO [main] Starting Main using Java 20 with PID 25424 (C:\Users\paulf\OneDrive\Uni\23_SS\DSE\DSE_Programming_Tasks\task7\target\classes started by paulf in C:\Users\paulf\OneDrive\Uni\23_SS\DSE\DSE_Programming_Tasks\task7)
+2023-06-18 21:11:42,412 INFO [main] No active profile set, falling back to 1 default profile: "default"
+2023-06-18 21:11:43,860 INFO [main] Initializing ProtocolHandler ["http-nio-8080"]
+2023-06-18 21:11:43,861 INFO [main] Starting service [Tomcat]
+2023-06-18 21:11:43,861 INFO [main] Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-06-18 21:11:43,958 INFO [main] Initializing Spring embedded WebApplicationContext
+2023-06-18 21:11:44,472 INFO [main] Starting ProtocolHandler ["http-nio-8080"]
+2023-06-18 21:11:44,506 INFO [main] Started Main in 2.62 seconds (process running for 3.802)
+2023-06-18 21:12:11,411 INFO [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
