@@ -1,40 +1,34 @@
 package main;
 
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-public class Meeting implements Serializable {
-    private final UUID meetingId;
+public class Meeting {
     private LocalDate date;
     private LocalTime startTime;
     private List<String> participants;
 
     public Meeting(LocalDate date, LocalTime startTime) {
-        this.meetingId = UUID.randomUUID();
         this.date = date;
         this.startTime = startTime;
-        this.participants = new LinkedList<>();
-    }
-    public UUID getMeetingId() {
-        return meetingId;
-    }
-
-    @Override
-    public String toString() {
-        return "Meeting{" +
-                "meetingId=" + meetingId +
-                ", date=" + date +
-                ", startTime=" + startTime +
-                ", participants=" + participants +
-                '}';
+        this.participants = new ArrayList<>();
     }
 
     public void addParticipant(String participant) {
         this.participants.add(participant);
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public List<String> getParticipants() {
+        return participants;
     }
 }

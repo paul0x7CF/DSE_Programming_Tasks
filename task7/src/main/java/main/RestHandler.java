@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -19,11 +21,6 @@ public class RestHandler {
 
     private final MeetingScheduler meetingScheduler = new MeetingScheduler();
 
-    // Bean for Class in Constructor
-
-/*    public RestHandler(MeetingScheduler meetingScheduler) {
-        this.meetingScheduler = meetingScheduler;
-    }*/
 
     public RestHandler() {
         Meeting meeting1 = new Meeting(LocalDate.now(), LocalTime.now().plusHours(1));
@@ -40,14 +37,14 @@ public class RestHandler {
 
 
     @RequestMapping(value = "/meetings", method = RequestMethod.GET, produces = {"application/json"})
-    public ResponseEntity<ArrayList<Meeting>> getMeetings() {
+    public ResponseEntity<Map<Integer,Meeting>> getMeetings() {
         if (meetingScheduler.getMeetings().isEmpty())
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(meetingScheduler.getMeetings());
     }
 
-    @RequestMapping(value = "/meetings", method = RequestMethod.POST, consumes = {"application/json"})
-    public ResponseEntity<Meeting> addMeeting(@RequestParam @DateTimeFormat(pattern = "dd.MM.yy") LocalDate date,
+    @RequestMapping(value = "/meetings", method = RequestMethod.POST)
+    public ResponseEntity<Void> addMeeting(@RequestParam @DateTimeFormat(pattern = "dd.MM.yy") LocalDate date,
                                               @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime startTime) {
         Meeting newMeeting = new Meeting(date, startTime);
         meetingScheduler.addMeeting(newMeeting);
@@ -56,32 +53,24 @@ public class RestHandler {
 
     @RequestMapping(value = "/meetings/{meetingId}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> removeMeeting(@PathVariable("meetingId") String meetingId) {
-        UUID uuid = UUID.fromString(meetingId);
-        meetingScheduler.removeMeeting(uuid);
+        meetingScheduler.removeMeeting(Integer.parseInt(meetingId));
         return ResponseEntity.ok().build();
     }
 
     @RequestMapping(value = "/meetings/{meetingId}", method = RequestMethod.POST)
     public ResponseEntity<Void> addParticipant(@PathVariable("meetingId") String meetingId, @RequestParam String participant) {
-        UUID uuid = UUID.fromString(meetingId);
-        meetingScheduler.addParticipant(uuid, participant);
+        meetingScheduler.addParticipant(Integer.parseInt(meetingId), participant);
         return ResponseEntity.ok().build();
     }
 
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = {"application/json"})
-    public ResponseEntity<HashMap<UUID,Meeting>> test() throws JsonProcessingException {
-        HashMap<UUID, Meeting> test = new HashMap<>();
-        test.put(UUID.randomUUID(), new Meeting(LocalDate.now(), LocalTime.now()));
-
-        return ResponseEntity.ok(test);
-
-        /*ArrayList<String> test = new ArrayList<>();
-        test.add("Test");
-        test.add("Test2");
-        return ResponseEntity.ok(test);
-        //return ResponseEntity.ok("Test");*/
+    @RequestMapping(value = "/meetings/{meetingId}", method = RequestMethod.GET, produces = {"application/json"})
+    public ResponseEntity<Meeting> getMeetingById(@PathVariable("meetingId") String meetingId) throws JsonProcessingException {
+        int id = Integer.parseInt(meetingId);
+        if(meetingScheduler.getMeetings().containsKey(id))
+            return ResponseEntity.ok(meetingScheduler.getMeetings().get(id));
+        else
+            return ResponseEntity.notFound().build();
     }
-
 
 }
