@@ -1,5 +1,6 @@
 package main;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -7,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-public class Meeting {
+public class Meeting implements Serializable {
     private final UUID meetingId;
     private LocalDate date;
     private LocalTime startTime;

@@ -1,11 +1,15 @@
 package main;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 
@@ -43,7 +47,8 @@ public class RestHandler {
     }
 
     @RequestMapping(value = "/meetings", method = RequestMethod.POST, consumes = {"application/json"})
-    public ResponseEntity<Meeting> addMeeting(@RequestParam LocalDate date, @RequestParam LocalTime startTime) {
+    public ResponseEntity<Meeting> addMeeting(@RequestParam @DateTimeFormat(pattern = "dd.MM.yy") LocalDate date,
+                                              @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime startTime) {
         Meeting newMeeting = new Meeting(date, startTime);
         meetingScheduler.addMeeting(newMeeting);
         return ResponseEntity.ok().build();
@@ -65,11 +70,17 @@ public class RestHandler {
 
 
     @RequestMapping(value = "/test", method = RequestMethod.GET, produces = {"application/json"})
-    public ResponseEntity<ArrayList<String>> test() {
-        ArrayList<String> test = new ArrayList<>();
-        test.add("Test");
+    public ResponseEntity<HashMap<UUID,Meeting>> test() throws JsonProcessingException {
+        HashMap<UUID, Meeting> test = new HashMap<>();
+        test.put(UUID.randomUUID(), new Meeting(LocalDate.now(), LocalTime.now()));
+
         return ResponseEntity.ok(test);
-        //return ResponseEntity.ok("Test");
+
+        /*ArrayList<String> test = new ArrayList<>();
+        test.add("Test");
+        test.add("Test2");
+        return ResponseEntity.ok(test);
+        //return ResponseEntity.ok("Test");*/
     }
 
 
