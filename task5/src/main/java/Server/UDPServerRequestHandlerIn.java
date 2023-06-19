@@ -22,7 +22,7 @@ public class UDPServerRequestHandlerIn implements Runnable {
         try {
             socket = new DatagramSocket(8080);
             while (true) {
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[5000];
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
 
                 socket.receive(request);

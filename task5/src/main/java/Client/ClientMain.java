@@ -37,7 +37,7 @@ public class ClientMain {
 
         System.out.println("Use Case 3");
         boolean executed = false;
-        LogEntry[] logEntries = new LogEntry[100];
+        LogEntry[] logEntries = new LogEntry[500];
         PollLogStorage pollLogStorage= logStorage.increaseStorageSpace(logEntries.length);
         Arrays.fill(logEntries, new LogEntry("Bulk Test"));
         LogEntry[] compressedData = CompressData.compress(logEntries);
