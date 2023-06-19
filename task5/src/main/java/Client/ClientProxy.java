@@ -2,7 +2,7 @@ package Client;
 
 import Shared.EKnownMethods;
 import Server.KickStartDev.IRemoteObject;
-import Server.KickStartDev.LogEntry;
+import Shared.LogEntry;
 import Shared.RequestMessage;
 import Shared.EResult;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +15,7 @@ public class ClientProxy implements IRemoteObject {
     @Override
     public void singleLog(String entry) throws Exception {
         logger.debug("asking for singleLog methode with parameter {}", entry);
-        requestor.invokeObjectByFireAndForget(new RequestMessage(EKnownMethods.singleLog, entry, EResult.NO_RESULT));
+        ClientRequestor.invokeObjectByFireAndForget(new RequestMessage(EKnownMethods.singleLog, entry, EResult.NO_RESULT));
 
     }
     @Override
@@ -26,22 +26,23 @@ public class ClientProxy implements IRemoteObject {
     }
 
     @Override
-    public void increaseStorageSpace(int increaseBy, CallbackIncLogStorage callback) {
+    public PollLogStorage increaseStorageSpace(int increaseBy) {
         logger.debug("asking for increaseStorageSpace methode with parameter {}", increaseBy);
-        requestor.handleCallback(new RequestMessage(EKnownMethods.increaseStorageSpace, increaseBy, EResult.CALLBACK), callback);
-
-    }
-
-
-    @Override
-    public void addLogsInBulk(String[] logBulk) {
-        logger.debug("asking for addLogsInBulk methode with {} parameters", logBulk.length);
-
-    }
-
-    @Override
-    public PollSearch searchLogs(String searchTerm) {
-        PollSearch resultPoll = requestor.handlePolling(new RequestMessage(EKnownMethods.searchLogs, searchTerm, EResult.ACK_ON_TARGET));
+        PollLogStorage resultPoll = requestor.handlePolling(new RequestMessage(EKnownMethods.increaseStorageSpace, increaseBy, EResult.ACK_ON_TARGET));
         return resultPoll;
+
+    }
+
+
+    @Override
+    public void addLogsInBulk(LogEntry[] logBulk) {
+        logger.debug("asking for addLogsInBulk methode with {} parameters", logBulk.length);
+        ClientRequestor.invokeObjectByFireAndForget(new RequestMessage(EKnownMethods.addLogsInBulk, logBulk, EResult.NO_RESULT));
+
+    }
+
+    @Override
+    public void searchLogs(String searchTerm, CallbackSearch callback) {
+        requestor.handleCallback(new RequestMessage(EKnownMethods.searchLogs, searchTerm, EResult.CALLBACK), callback);
     }
 }

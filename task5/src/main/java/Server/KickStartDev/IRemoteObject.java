@@ -1,16 +1,17 @@
 package Server.KickStartDev;
 
-import Client.CallbackIncLogStorage;
-import Client.PollSearch;
+import Client.CallbackSearch;
+import Client.PollLogStorage;
+import Shared.LogEntry;
 
 public interface IRemoteObject {
 
     public void singleLog(String entry) throws Exception;
     public void removeOldLogs(int amountToRemove) throws Exception;
-    public void increaseStorageSpace(int increaseBy, CallbackIncLogStorage callback);
-    void addLogsInBulk(String[] logBulk);
+    public PollLogStorage increaseStorageSpace(int increaseBy);
+    public void addLogsInBulk(LogEntry[] logBulk);
 
-    public PollSearch searchLogs(String searchTerm);
+    public void searchLogs(String searchTerm, CallbackSearch callback);
 
 
 }

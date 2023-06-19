@@ -25,7 +25,7 @@ public class UDPClientRequestHandlerIn implements Runnable{
             final int port = 5000;
             socket = new DatagramSocket(port);
             while (true) {
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[4000];
                 DatagramPacket response = new DatagramPacket(buffer, buffer.length);
 
                 logger.info("Listening for response from server on Port {}", port);

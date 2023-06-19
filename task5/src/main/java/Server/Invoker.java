@@ -1,7 +1,7 @@
 package Server;
 
 import Shared.*;
-import Server.KickStartDev.LogEntry;
+import Shared.LogEntry;
 import Server.KickStartDev.RemoteObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,34 +25,34 @@ public class Invoker {
                     remoteObject.logSingleEntry(new LogEntry((String) requestMessage.getRequestData()));
                 }
                 case removeOldLogs -> {
-                    logger.info("invoking removeOldLogs method");
-                    remoteObject.removeOldLogs((int) requestMessage.getRequestData());
+                    int removeAbout = (int) requestMessage.getRequestData();
+                    logger.info("invoking removeOldLogs method about {} logs", removeAbout);
+                    remoteObject.removeOldLogs(removeAbout);
+                    // Return a value for the ACK on target
                     return new byte[1];
                 }
                 case increaseStorageSpace -> {
                     logger.info("invoking increaseStorageSpace method");
                     final int resultInc = remoteObject.increaseLogStorage((int) requestMessage.getRequestData());
+                    ResponseMessage responseMessage = new ResponseMessage(EKnownMethods.increaseStorageSpace, resultInc);
+                    return responseMessage.marshall();
 
-                    if(requestMessage.getResultAs().equals(EResult.CALLBACK)) {
-                        logger.debug("invoking callback with result {}", resultInc);
-                        CallbackProxy callbackProxy = new CallbackProxy();
-                        callbackProxy.callback(resultInc);
-                    }
                 }
                 case addLogsInBulk -> {
                     logger.debug("invoking addLogsInBulk method");
-                    // TODO: Implement this case
+                    remoteObject.addLogsInBulk((LogEntry[]) requestMessage.getRequestData());
                 }
                 case searchLogs -> {
                     logger.info("invoking searchLogs method");
+                    logger.debug("searching for {}", requestMessage.getRequestData());
                     LogEntry[] foundLogs = remoteObject.search((String) requestMessage.getRequestData());
-                    String[] foundLogsAsString = new String[foundLogs.length];
-                    for (int i = 0; i < foundLogs.length; i++) {
-                        foundLogsAsString[i] = foundLogs[i].getLogEntry();
+
+                    logger.debug("found {} logs", foundLogs.length);
+                    if(requestMessage.getResultAs().equals(EResult.CALLBACK)) {
+                        logger.debug("invoking callback");
+                        CallbackProxy callbackProxy = new CallbackProxy();
+                        callbackProxy.callback(foundLogs);
                     }
-                    logger.debug("found {} logs", foundLogsAsString.length);
-                    ResponseMessage responseMessage = new ResponseMessage(EKnownMethods.searchLogs, foundLogsAsString);
-                    return responseMessage.marshall();
 
 
                 }

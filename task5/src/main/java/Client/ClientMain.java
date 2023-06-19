@@ -1,5 +1,6 @@
 package Client;
 
+import Shared.LogEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,46 +35,47 @@ public class ClientMain {
             logger.error("Error while deleting logs");
         }
 
+        System.out.println("Use Case 3");
+        boolean executed = false;
+        LogEntry[] logEntries = new LogEntry[100];
+        PollLogStorage pollLogStorage= logStorage.increaseStorageSpace(logEntries.length);
+        Arrays.fill(logEntries, new LogEntry("Bulk Test"));
+        LogEntry[] compressedData = CompressData.compress(logEntries);
+        executed = checkPoll(pollLogStorage, compressedData, logStorage);
 
-       /* System.out.println("Use Case 3");
-        String[] logEntries = new String[100];
-        Arrays.fill(logEntries, "BulkTestLogs");
-        final String[][] compressedHolder = new String[][]{new String[1]};
-        CallbackIncLogStorage callbackOnInc = isIncBy -> {
-            logger.info("Successfully increased storage space By {}", isIncBy);
-            logger.debug("Adding logs in bulk");
-            CallbackOnCompressed callbackOnCompressed = isCompressed -> {
-                logger.info("Successfully added logs in bulk");
-                logStorage.addLogsInBulk(isCompressed);
-            };
-            logStorage.addLogsInBulk(compressedHolder[0]);
-
-        };
-        
-        logStorage.increaseStorageSpace(logEntries.length, callbackOnInc);
-        String[] compressedData = CompressData.compress(logEntries);
-
-        compressedHolder[0] = asCompressData.compress(logEntries);
-        logger.debug("Do something");
-
-        //logStorage.addLogsInBulk(compressedData);*/
 
         System.out.println("Use Case 4");
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter search term:");
         String searchTerm = scanner.nextLine();
         scanner.close();
-        PollSearch pollSearch = logStorage.searchLogs(searchTerm);
-        while (!pollSearch.isSearchComplete()) {
-            logger.debug("Waiting for search to complete");
-        }
-        if(pollSearch.isSearchComplete()) {
-            System.out.println("Search complete");
-            System.out.println("Found" + pollSearch.getSearchResults().size() + "matches");
-            for (String result : pollSearch.getSearchResults()) {
+        CallbackSearch callbackOnSearch = searchResults -> {
+            logger.info("Successfully found {} Search Results", searchResults.length);
+            for (LogEntry result : searchResults) {
                 System.out.println(result);
             }
+
+        };
+
+        logStorage.searchLogs(searchTerm, callbackOnSearch);
+        System.out.println("Do something else");
+
+        if(!executed) {
+            System.out.println("Use Case 3 again");
+            executed = checkPoll(pollLogStorage, compressedData, logStorage);
         }
 
+
+    }
+
+    public static boolean checkPoll(PollLogStorage pollLogStorage, LogEntry[] compressedData, ClientProxy logStorage) {
+        if (pollLogStorage.isIncreaseComplete()) {
+            logger.info("Successfully increased storage space By {}", pollLogStorage.getIncrementAmount());
+            logger.debug("Adding logs in bulk");
+            logStorage.addLogsInBulk(compressedData);
+            return true;
+        }
+        return false;
     }
 }

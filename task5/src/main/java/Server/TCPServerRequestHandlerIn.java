@@ -31,11 +31,10 @@ public class TCPServerRequestHandlerIn implements Runnable {
 
     private void startTCPHandler() {
         try {
-            logger.info("listening for TCP request");
             Socket socket = serverSocket.accept();
 
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-            logger.debug("Data was received from client over TCP connection");
+            logger.trace("Data was received from client over TCP connection");
 
             byte[] request = new byte[dataInputStream.readInt()];
             dataInputStream.readFully(request, 0, request.length);

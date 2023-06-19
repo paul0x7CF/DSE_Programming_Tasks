@@ -1,6 +1,7 @@
 package Client;
 
 import Shared.IMarshall;
+import Shared.LogEntry;
 import Shared.RequestMessage;
 import Shared.ResponseMessage;
 import org.apache.logging.log4j.LogManager;
@@ -12,8 +13,8 @@ public class ClientRequestor {
         new Thread(new UDPClientRequestHandlerIn(this)).start();
     }
 
-    private CallbackIncLogStorage callbackOnIncLogStorage;
-    private PollSearch pollSearchObject;
+    private CallbackSearch callbackSearch;
+    private PollLogStorage pollLogStorage;
 
     private static final Logger logger = LogManager.getLogger(ClientRequestor.class);
 
@@ -37,9 +38,9 @@ public class ClientRequestor {
         }
     }
 
-    public void handleCallback(RequestMessage requestMessage, CallbackIncLogStorage callback){
+    public void handleCallback(RequestMessage requestMessage, CallbackSearch callback){
         try {
-            this.callbackOnIncLogStorage = callback;
+            this.callbackSearch = callback;
             ClientRequestHandlerOut.sendMessageViaTCPTransportACK(requestMessage.marshall());
         } catch (Exception e) {
             logger.error("Error while marshalling the Callback message");
@@ -47,10 +48,10 @@ public class ClientRequestor {
         }
     }
 
-    public PollSearch handlePolling(RequestMessage requestMessage) {
-        this.pollSearchObject = new PollSearch();
-        new Thread(new PollSearchListener(this.pollSearchObject, requestMessage),"PollListener").start();
-        return this.pollSearchObject;
+    public PollLogStorage handlePolling(RequestMessage requestMessage) {
+        this.pollLogStorage = new PollLogStorage();
+        new Thread(new PollLogStorageListener(this.pollLogStorage, requestMessage),"PollListener").start();
+        return this.pollLogStorage;
     }
 
     public void handleResponse(byte[] data) {
@@ -58,10 +59,12 @@ public class ClientRequestor {
         try {
             ResponseMessage responseMessage = IMarshall.unmarshall(data);
             switch (responseMessage.getMethod()){
-                case increaseStorageSpace -> {
+                case searchLogs -> {
                     logger.info("Callback received from server");
-                    this.callbackOnIncLogStorage.callback((int) responseMessage.getResponseData());
-
+                    this.callbackSearch.callback((LogEntry[]) responseMessage.getResponseData());
+                }
+                default -> {
+                    logger.debug("Message not supported");
                 }
             }
         } catch (Exception e) {

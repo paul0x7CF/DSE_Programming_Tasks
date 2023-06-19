@@ -1,7 +1,9 @@
-package Server.KickStartDev;
+package Shared;
 
 
-public class LogEntry {
+import java.io.Serializable;
+
+public class LogEntry implements Serializable {
 	private final String logEntry;
 
 	@Override

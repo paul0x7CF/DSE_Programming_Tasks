@@ -23,7 +23,12 @@ public class ClientRequestHandlerOut {
             InetAddress aHost = InetAddress.getByName("localhost");
             int serverPort = 8080;
 
-            DatagramPacket request = new DatagramPacket(dataToSend, dataToSend.length, aHost, serverPort);
+            DatagramPacket request = new DatagramPacket(
+                    dataToSend,
+                    dataToSend.length,
+                    aHost,
+                    serverPort
+            );
 
             clientSocket.send(request);
             logger.debug("Data was sent to server over UDP connection");

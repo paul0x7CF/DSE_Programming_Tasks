@@ -21,13 +21,12 @@ public class UDPServerRequestHandlerIn implements Runnable {
         DatagramSocket socket = null;
         try {
             socket = new DatagramSocket(8080);
-            logger.info("Server started on port 8080");
             while (true) {
                 byte[] buffer = new byte[1024];
                 DatagramPacket request = new DatagramPacket(buffer, buffer.length);
 
                 socket.receive(request);
-                logger.debug("Data was received from client over UDP connection");
+                logger.trace("Data was received from client over UDP connection");
 
                 invoker.invoke(request.getData());
                 logger.trace("invocation finished");

@@ -1,6 +1,6 @@
 package Server.KickStartDev;
 
-import Server.UDPServerRequestHandlerIn;
+import Shared.LogEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
